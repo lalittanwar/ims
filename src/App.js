@@ -2,11 +2,11 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import {BrowserRouter as Router,Route,Switch} from 'react-router-dom'
-import Sidebar from './Components/Sidebar';
-import Product from './Components/Product';
-import Topbar from './Components/Topbar';
-import Brand from './Components/Brand';
-import Dashboard from './Components/Dashboard';
+import Sidebar from './Components/Sidebar/Sidebar';
+import Product from './Components/Product/Product';
+import Topbar from './Components/Topbar/Topbar';
+import Brand from './Components/Brand/Brand';
+import Dashboard from './Components/Dashboard/Dashboard';
 
 function App() {
   return (
