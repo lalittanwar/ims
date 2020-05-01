@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import BrandService from '../../Services/BrandService'
 
 export class Dashboard extends Component {
 
@@ -7,6 +8,8 @@ export class Dashboard extends Component {
         this.setState({
 
         });
+        this.brandService = new BrandService();
+        this.brandService.findAllBrand();
     }
 
    componentDidMount(){
