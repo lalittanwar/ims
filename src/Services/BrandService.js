@@ -9,14 +9,14 @@ class BrandService extends React.Component{
     }
 
     findBrandById = function(ids){
-        const url = process.env.REACT_APP_API_PRODUCT_SERVICE+"?brandIds="+ids;
+        const url = process.env.REACT_APP_API_PRODUCT_SERVICE+"brand/?brandIds="+ids;
         this.requestService.getRequest(url)
         .then(response => { return Promise.resolve(response);})
         .catch(error => { return Promise.reject(error);});
     }
     
     findAllBrand = function(){
-        const url = process.env.REACT_APP_API_PRODUCT_SERVICE;
+        const url = process.env.REACT_APP_API_PRODUCT_SERVICE+"brand/";
         this.requestService.getRequest(url)
         .then(response => { return Promise.resolve(response);})
         .catch(error => { return Promise.reject(error);});

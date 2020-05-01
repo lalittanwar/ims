@@ -8,7 +8,6 @@ class RequestService extends React.Component{
     }
 
     getRequest = function(url){
-        alert(url)
         return axios.get(url)
         .then(response => { Promise.resolve(response.data)})
         .catch(error => { Promise.reject(error)});
