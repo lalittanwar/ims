@@ -14,20 +14,20 @@ export class Sidebar extends Component {
         }
 
         return (
-            <div  class="list-group" style={sideBar}>
+            <div  className="list-group" style={sideBar}>
                 <Link to="/">
-                    <a style={centerText} class="list-group-item ">Dashboard</a>
+                    <div style={centerText} className="list-group-item ">Dashboard</div>
                 </Link>
                 <Link to="/product">
-                    <a style={centerText} class="list-group-item ">Products</a>
+                    <div style={centerText} className="list-group-item ">Products</div>
                 </Link>
                 <Link to="/brand">
-                    <a style={centerText} class="list-group-item ">Brand</a>
+                    <div style={centerText} className="list-group-item ">Brand</div>
                 </Link>
-                <a style={centerText} class="list-group-item ">Overview</a>
-                <a style={centerText} class="list-group-item ">Events</a>
-                <a style={centerText} class="list-group-item ">Profile</a>
-                <a style={centerText} class="list-group-item ">Status</a>
+                <div style={centerText} className="list-group-item ">Overview</div>
+                <div style={centerText} className="list-group-item ">Events</div>
+                <div style={centerText} className="list-group-item ">Profile</div>
+                <div style={centerText} className="list-group-item ">Status</div>
             </div>
         )
     }
