@@ -21,7 +21,6 @@ function App() {
             <Sidebar />
           </div>
           <div className="col-md-10" style={{paddingRight:0,paddingLeft:0}}>
-
             <div>
               <Switch>
                 <Route path="/" exact component={Dashboard} />
