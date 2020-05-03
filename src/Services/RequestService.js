@@ -9,12 +9,12 @@ class RequestService extends React.Component{
 
     getRequest = function(url){
         return axios.get(url)
-        .then(response => { Promise.resolve(response.data)})
-        .catch(error => { Promise.reject(error)});
+        .then(response => { return Promise.resolve(response.data)})
+        .catch(error => { return Promise.reject(error)});
     }
     
     postRequest = function(url,object){
-        return axios.post(url,{object})
+        return axios.post(url,object)
         .then(response => { 
             return Promise.resolve(response.data);
         })

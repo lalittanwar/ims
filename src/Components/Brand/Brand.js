@@ -1,33 +1,37 @@
 import React,{useState,useEffect} from 'react'
 import {Button,Modal,Form} from 'react-bootstrap'
-import Axios from 'axios';
+import BrandService from '../../Services/BrandService';
 
 
 function Brand() {
+
+    const brandService = new BrandService();
+
+
     const [show,setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const [product,setProduct] = useState({brand: '',available: true,id: 0});
+    const [product,setProduct] = useState({id: 0,brand: '',available: true});
     const handleName = (event) => setProduct({...product,brand: event.target.value});
     const handleStatus = (event) => setProduct({...product,available: event.target.value});
+
+    const [brand,setBrand] = useState([]);
 
     const saveProduct = (event) => {
         event.preventDefault();
         setProduct({...product,id: product.id + 1});
-        console.log('product',product);
-        // const product = product;
-
-        Axios.post('https://ims-db-service.herokuapp.com/db/brand',{product})
-        .then(json => console.log(json.data))
-
+        brandService.saveBrand(product);
         handleClose();
     }
 
     useEffect(() => {
-        Axios.get('https://ims-db-service.herokuapp.com/db/brand')
-        .then(json => console.log(json.data))
-      });
+        brandService.findAllBrand()
+        .then(res => {
+            setBrand(...brand,res)
+            console.log(brand,'brand')
+        })
+      },[show]);
     
 
 
@@ -35,6 +39,10 @@ function Brand() {
         <div style={{padding: 10}}>
             <h4>Brand</h4>
             <Button variant="outline-success" onClick={handleShow}> Add Brand</Button>
+            <ul>{brand.map((brand) => 
+                <li key={brand.id}>{brand.brand}</li>
+          )} </ul>
+
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Brand</Modal.Title>
