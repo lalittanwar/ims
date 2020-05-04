@@ -45,6 +45,8 @@ function BrandList({show,setShow}) {
     function deleteBrand(brand) {
         console.log(brand,'brand delete');
         brandService.deleteBrand(brand);
+        brandService.findAllBrand()
+            .then(res => setBrand(res))
     }
 
     function updateBrand(brand) {
