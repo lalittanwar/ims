@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import {Button,Modal,Form} from 'react-bootstrap'
 import BrandService from '../../Services/BrandService'
 
-function BrandModal({show,setShow}) {
+function BrandModal({show,setShow,updatedBrand,setUpdatedBrand}) {
 
     const brandService = new BrandService();
 
@@ -20,10 +20,15 @@ function BrandModal({show,setShow}) {
         handleClose();
     }
 
+    useEffect(() => {
+        // setProduct(updatedBrand)
+        console.log(updatedBrand,'brand in modal');
+    },[])
+
     return (
         <div className="p-2">
             <Modal show={show}>
-                <Modal.Header closeButton>
+                <Modal.Header closeButton onClick={() => setShow(false)}>
                     <Modal.Title>Add Brand</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -43,7 +48,7 @@ function BrandModal({show,setShow}) {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" type="submit" onClick={saveProduct}>Save Changes</Button>
-                    <Button variant="secondary" >Close</Button>
+                    <Button variant="secondary" onClick={() => setShow(false)}>Close</Button>
                 </Modal.Footer>
             </Modal>
         </div>

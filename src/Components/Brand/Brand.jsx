@@ -17,17 +17,17 @@ function Brand() {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     
-    const [brand,setBrand] = useState([]);
+    // const [brand,setBrand] = useState([]);
 
 
-    useEffect(() => {
+    /* useEffect(() => {
         brandService.findAllBrand()
             .then(res => {
                 setBrand(res)
                 console.log(brand,'brand')
             })
     },[]);
-
+ */
     function addBrandTooltip(props) {
         return (
             <Tooltip id="button-tooltip" {...props}>
@@ -54,7 +54,7 @@ function Brand() {
                     </div>
                 </div>
             </div>
-            <BrandList />
+            <BrandList show={show} setShow={setShow}/>
            
             <BrandModal show={show} setShow={setShow}/>
         </div>

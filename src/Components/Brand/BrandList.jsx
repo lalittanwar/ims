@@ -1,22 +1,26 @@
-import React, { useState, useEffect } from 'react'
+import React,{useState,useEffect} from 'react'
 import BrandService from '../../Services/BrandService';
 import './brandlist.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faTrash,faEdit} from '@fortawesome/free-solid-svg-icons';
 import UserService from '../../Services/UserService';
-import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+import {Tooltip,OverlayTrigger} from 'react-bootstrap';
+import BrandModal from '../Brand/BrandModal'
 
 
+function BrandList({show,setShow}) {
 
-function BrandList() {
     const brandService = new BrandService();
-    const userService = new UserService();
-    const [brand, setBrand] = useState([]);
-    const [userHasWritePermission, setUserPermission] = useState(true);
+    
+    const [brand,setBrand] = useState([]);
+    const [userHasWritePermission,setUserPermission] = useState(true);
+
+    const [updatedBrand,setUpdatedBrand] = useState([]);
+
     useEffect(() => {
         brandService.findAllBrand()
             .then(res => setBrand(res))
-    }, []);
+    },[]);
     // useEffect(() => {
     //     userService.userHasWritePermission()
     //         .then(res => setUserPermission(res))
@@ -38,11 +42,17 @@ function BrandList() {
         );
     }
 
-    const deleteBrand = (brand) => {
-        // event.preventDefault();
-        // setProduct({...product,id: product.id + 1});
+    function deleteBrand(brand) {
+        console.log(brand,'brand delete');
         brandService.deleteBrand(brand);
-     
+    }
+
+    function updateBrand(brand) {
+        console.log(brand,'brand update');
+        setUpdatedBrand(brand);
+        setShow(true);
+        console.log(updatedBrand,'updatedBrand');
+        // brandService.updateBrand(brand);
     }
 
     return (
@@ -57,22 +67,22 @@ function BrandList() {
                                     <span className="text-primary text-bold text-uppercase font-weight-bold"> {brand.brand} </span>
                                 </p>
                                 <div className="position-relative">
-                                    <div className="position-absolute delete-button d-inline-block cp delete-btn-position rounded-circle" onClick={deleteBrand(brand)}>
+                                    <div className="position-absolute delete-button d-inline-block cp delete-btn-position rounded-circle" onClick={() => deleteBrand(brand)}>
                                         <OverlayTrigger
                                             placement="left"
-                                            delay={{ show: 10, hide: 10 }}
+                                            delay={{show: 10,hide: 10}}
                                             overlay={deleteBrandToolTip}
                                         >
-                                          <div className="icon-center">  <FontAwesomeIcon icon={faTrash}  size="xs"/> </div>
+                                            <div className="icon-center">  <FontAwesomeIcon icon={faTrash} size="xs" /> </div>
                                         </OverlayTrigger>
                                     </div>
-                                    <div className="position-absolute update-button d-inline-block cp update-btn-position rounded-circle">
+                                    <div className="position-absolute update-button d-inline-block cp update-btn-position rounded-circle" onClick={() => updateBrand(brand)}>
                                         <OverlayTrigger
                                             placement="left"
-                                            delay={{ show: 10, hide: 10 }}
+                                            delay={{show: 10,hide: 10}}
                                             overlay={updateBrandToolTip}
                                         >
-                                            <div className="icon-center">  <FontAwesomeIcon icon={faEdit}  size="xs"/> </div>
+                                            <div className="icon-center">  <FontAwesomeIcon icon={faEdit} size="xs" /> </div>
                                         </OverlayTrigger>
                                     </div>
                                 </div>
@@ -81,6 +91,7 @@ function BrandList() {
                     </div>
                 )}
             </div>
+            <BrandModal updatedBrand={updatedBrand}/>
         </React.Fragment>
     )
 }

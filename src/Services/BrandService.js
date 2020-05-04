@@ -35,6 +35,13 @@ class BrandService extends React.Component {
             .then(response => {return Promise.resolve(response);})
             .catch(error => {return Promise.reject(error);});
     }
+
+    updateBrand = function (object) {
+        const url = process.env.REACT_APP_API_PRODUCT_SERVICE + "brand/";
+        this.requestService.updateRequest(url,object)
+            .then(response => {return Promise.resolve(response);})
+            .catch(error => {return Promise.reject(error);});
+    }
 }
 
 export default BrandService;
