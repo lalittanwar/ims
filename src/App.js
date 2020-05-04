@@ -4,7 +4,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import Sidebar from './Components/Sidebar/Sidebar';
 import Product from './Components/Product/Product';
 import Topbar from './Components/Topbar/Topbar';
-import Brand from './Components/Brand/Brand';
+import Brand from './Components/Brand/Brand.jsx';
 import Dashboard from './Components/Dashboard/Dashboard';
 import PrivateRoute from './Router/PrivateRoute';
 import Login from './Components/Login/Login';
