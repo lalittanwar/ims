@@ -2,32 +2,24 @@ import React,{Component} from 'react'
 import './Sidebar.css';
 import {Link} from 'react-router-dom'
 
+
 export class Sidebar extends Component {
     render() {
-        const sideBar = {
-            width: '100%'
-        }
-        const centerText = {
-            textAlign: 'center',
-            color: 'white',
-            borderRadius: '0'   
-        }
-
         return (
-            <div  className="list-group" style={sideBar}>
+            <div  className="list-group w-100">
                 <Link to="/">
-                    <div style={centerText} className="list-group-item ">Dashboard</div>
+                    <div className="list-group-item centerText">Dashboard</div>
                 </Link>
                 <Link to="/product">
-                    <div style={centerText} className="list-group-item ">Products</div>
+                    <div className="list-group-item centerText">Products</div>
                 </Link>
                 <Link to="/brand">
-                    <div style={centerText} className="list-group-item ">Brand</div>
+                    <div className="list-group-item centerText">Brand</div>
                 </Link>
-                <div style={centerText} className="list-group-item ">Overview</div>
-                <div style={centerText} className="list-group-item ">Events</div>
-                <div style={centerText} className="list-group-item ">Profile</div>
-                <div style={centerText} className="list-group-item ">Status</div>
+                <div className="list-group-item centerText">Overview</div>
+                <div className="list-group-item centerText">Events</div>
+                <div className="list-group-item centerText">Profile</div>
+                <div className="list-group-item centerText">Status</div>
             </div>
         )
     }

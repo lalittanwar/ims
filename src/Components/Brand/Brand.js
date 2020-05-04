@@ -36,13 +36,21 @@ function Brand() {
 
 
     return (
-        <div style={{padding: 10}}>
-            <h4>Brand</h4>
-            <Button variant="outline-success" onClick={handleShow}> Add Brand</Button>
+        <div className="p-2">
+            
+            <div className="row">
+                <div className="col-12 col-sm-8 mb-2 mb-sm-0"> <h4>Brand</h4> </div>
+                <div className="col-12 col-sm-4 mb-2 mb-sm-0 text-right"> 
+                    <Button variant="outline-success" onClick={handleShow}> Add Brand</Button>
+                </div>
+            </div>
+            
+            
             <ul>{brand.map((brand) => 
                 <li key={brand.id}>{brand.brand}</li>
           )} </ul>
 
+            {/* TODO => Make seprate component for this */}
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Brand</Modal.Title>
@@ -51,7 +59,7 @@ function Brand() {
                     <Form onSubmit={saveProduct}>
                         <Form.Group controlId="formBasicEmail" >
                             <Form.Label>Product Name</Form.Label>
-                            <Form.Control type="text" placeholder="brand" value={product.brand} onChange={handleName} />
+                            <Form.Control type="text" placeholder="Add new brand.ex: Addidas" value={product.brand} onChange={handleName} />
                         </Form.Group>
                         <Form.Group controlId="exampleForm.SelectCustom">
                             <Form.Label>Status</Form.Label>
@@ -67,6 +75,7 @@ function Brand() {
                     <Button variant="secondary" onClick={handleClose}>Close</Button>
                 </Modal.Footer>
             </Modal>
+
         </div>
     )
 }
