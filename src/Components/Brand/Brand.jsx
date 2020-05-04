@@ -11,23 +11,11 @@ import BrandModal from '../Brand/BrandModal'
 
 function Brand() {
 
-    const brandService = new BrandService();
-
     const [show,setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     
-    // const [brand,setBrand] = useState([]);
 
-
-    /* useEffect(() => {
-        brandService.findAllBrand()
-            .then(res => {
-                setBrand(res)
-                console.log(brand,'brand')
-            })
-    },[]);
- */
     function addBrandTooltip(props) {
         return (
             <Tooltip id="button-tooltip" {...props}>

@@ -2,7 +2,7 @@ import React,{useState,useEffect} from 'react'
 import {Button,Modal,Form} from 'react-bootstrap'
 import BrandService from '../../Services/BrandService'
 
-function BrandModal({show,setShow,updatedBrand,setUpdatedBrand}) {
+function BrandModal({show,setShow,updatedBrand,setUpdatedBrand, update, setUpdate}) {
 
     const brandService = new BrandService();
 
@@ -12,17 +12,22 @@ function BrandModal({show,setShow,updatedBrand,setUpdatedBrand}) {
     const handleName = (event) => setProduct({...product,brand: event.target.value});
     const handleStatus = (event) => setProduct({...product,available: event.target.value});
 
+    // const handleUpdate = () => setUpdate(true);
+
 
     const saveProduct = (event) => {
         event.preventDefault();
         setProduct({...product,id: product.id + 1});
         brandService.saveBrand(product);
+        setProduct({id: 0,brand: '',available: true});
+        // handleUpdate();
         handleClose();
     }
 
     useEffect(() => {
         // setProduct(updatedBrand)
         console.log(updatedBrand,'brand in modal');
+        // console.log(show,'show');
     },[])
 
     return (

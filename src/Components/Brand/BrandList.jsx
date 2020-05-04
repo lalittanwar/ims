@@ -11,7 +11,7 @@ import Loader from 'react-loader-spinner';
 function BrandList({ show, setShow }) {
 
     const brandService = new BrandService();
-
+    const [update, setUpdate] = useState(false);
     const [brand, setBrand] = useState([]);
     const [brandFetched, isBrandFetched] = useState(false);
     const [userHasWritePermission, setUserPermission] = useState(true);
@@ -23,9 +23,10 @@ function BrandList({ show, setShow }) {
             .then(res => {
                 setBrand(res);
                 setTimeout(()=> isBrandFetched(true),1000);
+                console.log(show,'show');
             }
             )
-    }, []);
+    }, [show]);
     //isBrandFetched(false);
     // useEffect(() => {
     //     userService.userHasWritePermission()
@@ -49,9 +50,15 @@ function BrandList({ show, setShow }) {
     }
 
     function deleteBrand(brand) {
-        brandService.deleteBrand(brand);
-        brandService.findAllBrand()
+        brandService.deleteBrand(brand)
+        .then(
+            brandService.findAllBrand()
             .then(res => setBrand(res))
+        )
+        .catch(
+            console.log('unable to delete')
+        )
+        
     }
 
     function updateBrand(brand) {
