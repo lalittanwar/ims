@@ -8,7 +8,7 @@ import { faProjectDiagram,faUser, faDigitalTachograph, faEnvelopeOpenText,faMete
 export class Sidebar extends Component {
     render() {
         return (
-            <div  className="list-group w-100">
+            <div  className="list-group w-100 h-100">
                 <Link to="/">
                     <div className="list-group-item">
                         <span className="mr-1"><FontAwesomeIcon icon={faMeteor} /></span> Dashboard

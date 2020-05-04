@@ -10,4 +10,7 @@ div.list-group-item:hover{
     border-radius:0px !important;
 }
 
+.list-group{
+    background:#292b2c;
+}
 
