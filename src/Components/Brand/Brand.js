@@ -28,10 +28,10 @@ function Brand() {
     useEffect(() => {
         brandService.findAllBrand()
         .then(res => {
-            setBrand(...brand,res)
+            setBrand(res)
             console.log(brand,'brand')
         })
-      },[show]);
+      },[]);
     
 
 
