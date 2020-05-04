@@ -81,8 +81,6 @@ function BrandList() {
                     </div>
                 )}
             </div>
-
-
         </React.Fragment>
     )
 }
