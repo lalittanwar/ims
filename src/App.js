@@ -20,10 +20,10 @@ function App() {
         <Router>
           {loginService.isUserLoggedIn() ?
             <React.Fragment>
-              <div className="col-12">
+              <div className="col-12 bg-dark">
                 <Topbar />
               </div>
-              <div className="col-md-2 ">
+              <div className="col-md-2 bg-dark p-0">
                 <Sidebar />
               </div>
             </React.Fragment> : null}
