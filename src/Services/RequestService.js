@@ -24,7 +24,7 @@ class RequestService extends React.Component{
     }
     
     deleteRequest = function(url,object){
-        return axios.delete(url,{object})
+        return axios.delete(url,object)
         .then(response => { 
             return Promise.resolve(response.data);
         })

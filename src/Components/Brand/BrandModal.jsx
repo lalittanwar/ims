@@ -1,10 +1,12 @@
 import React,{useState,useEffect} from 'react'
 import {Button,Modal,Form} from 'react-bootstrap'
-import BrandService from '../../../Services/BrandService'
+import BrandService from '../../Services/BrandService'
 
-function BrandModal() {
+function BrandModal({show,setShow}) {
 
     const brandService = new BrandService();
+
+    const handleClose = () => setShow(false);
 
     const [product,setProduct] = useState({id: 0,brand: '',available: true});
     const handleName = (event) => setProduct({...product,brand: event.target.value});
@@ -15,12 +17,12 @@ function BrandModal() {
         event.preventDefault();
         setProduct({...product,id: product.id + 1});
         brandService.saveBrand(product);
-        // handleClose();
+        handleClose();
     }
 
     return (
-        <div>
-            <Modal>
+        <div className="p-2">
+            <Modal show={show}>
                 <Modal.Header closeButton>
                     <Modal.Title>Add Brand</Modal.Title>
                 </Modal.Header>
