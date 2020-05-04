@@ -10,6 +10,12 @@ div.list-group-item:hover{
     border-radius:0px !important;
 }
 
+div.list-group-item.active{
+    background:#0056b3 !important;
+    color: white;
+    border-radius:0px !important;
+}
+
 .list-group{
     background:#343a40;
     min-height: calc(100vh - 52px);
