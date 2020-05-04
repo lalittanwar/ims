@@ -7,6 +7,9 @@ import Product from './Components/Product/Product';
 import Topbar from './Components/Topbar/Topbar';
 import Brand from './Components/Brand/Brand';
 import Dashboard from './Components/Dashboard/Dashboard';
+import PrivateRoute from './Router/PrivateRoute';
+import Login from './Components/Login/Login';
+import PublicRoute from './Router/PublicRoute';
 
 function App() {
   return (
@@ -22,9 +25,10 @@ function App() {
           <div className="col-md-10">
             <div>
               <Switch>
-                <Route path="/" exact component={Dashboard} />
-                <Route path="/product" exact component={Product} />
-                <Route path="/brand" exact component={Brand} />
+                <PrivateRoute restricted={false} path="/" exact component={Dashboard} />
+                <PrivateRoute restricted={false} path="/product" exact component={Product} />
+                <PrivateRoute restricted={false} path="/brand" exact component={Brand} />
+                <PublicRoute  restricted={true} component={Login} path="/login" exact />
               </Switch>
             </div>
           </div>
