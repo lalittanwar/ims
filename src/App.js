@@ -10,6 +10,7 @@ import PrivateRoute from './Router/PrivateRoute';
 import Login from './Components/Login/Login';
 import PublicRoute from './Router/PublicRoute';
 import LoginService from './Services/LoginService';
+import UrlUtils from './Utils/UrlUtils';
 
 const loginService = new LoginService();
 
@@ -28,12 +29,12 @@ function App() {
               </div>
             </React.Fragment> : null}
           <div className="col-md-10">
-              <Switch>
-                <PrivateRoute restricted={false} path="/" exact component={Dashboard} />
-                <PrivateRoute restricted={false} path="/product" exact component={Product} />
-                <PrivateRoute restricted={false} path="/brand" exact component={Brand} />
-                <PublicRoute restricted={true} component={Login} path="/login" exact />
-              </Switch>
+            <Switch>
+              <PrivateRoute restricted={false} path="/" exact component={Dashboard} />
+              <PrivateRoute restricted={false} path="/product" exact component={Product} />
+              <PrivateRoute restricted={false} path="/brand" exact component={Brand} />
+              <PublicRoute restricted={true} component={Login} path="/login" exact />
+            </Switch>
           </div>
         </Router>
       </div>
