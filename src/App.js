@@ -28,14 +28,12 @@ function App() {
               </div>
             </React.Fragment> : null}
           <div className="col-md-10">
-            <div>
               <Switch>
                 <PrivateRoute restricted={false} path="/" exact component={Dashboard} />
                 <PrivateRoute restricted={false} path="/product" exact component={Product} />
                 <PrivateRoute restricted={false} path="/brand" exact component={Brand} />
                 <PublicRoute restricted={true} component={Login} path="/login" exact />
               </Switch>
-            </div>
           </div>
         </Router>
       </div>
