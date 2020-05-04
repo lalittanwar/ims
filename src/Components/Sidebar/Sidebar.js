@@ -10,8 +10,6 @@ export class Sidebar extends Component {
 
     constructor(){
         super();
-        const urlUtils = new UrlUtils();
-        alert(urlUtils.getQueryParamValue("active"))
     }
     render() {
         return (
