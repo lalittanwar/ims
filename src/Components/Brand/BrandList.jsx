@@ -38,6 +38,13 @@ function BrandList() {
         );
     }
 
+    const deleteBrand = (brand) => {
+        // event.preventDefault();
+        // setProduct({...product,id: product.id + 1});
+        brandService.deleteBrand(brand);
+     
+    }
+
     return (
         <React.Fragment>
             <div className="row mt-2">
@@ -50,7 +57,7 @@ function BrandList() {
                                     <span className="text-primary text-bold text-uppercase font-weight-bold"> {brand.brand} </span>
                                 </p>
                                 <div className="position-relative">
-                                    <div className="position-absolute delete-button d-inline-block cp delete-btn-position rounded-circle">
+                                    <div className="position-absolute delete-button d-inline-block cp delete-btn-position rounded-circle" onClick={deleteBrand(brand)}>
                                         <OverlayTrigger
                                             placement="left"
                                             delay={{ show: 10, hide: 10 }}
