@@ -10,25 +10,26 @@ import Dashboard from './Components/Dashboard/Dashboard';
 
 function App() {
   return (
-
-    <div className="row">
-      <Router>
-        <div className="col-12">
-          <Topbar />
-        </div>
-        <div className="col-md-2 ">
-          <Sidebar />
-        </div>
-        <div className="col-md-10">
-          <div>
-            <Switch>
-              <Route path="/" exact component={Dashboard} />
-              <Route path="/product" exact component={Product} />
-              <Route path="/brand" exact component={Brand} />
-            </Switch>
+    <div className="container-fluid">
+      <div className="row">
+        <Router>
+          <div className="col-12">
+            <Topbar/>
           </div>
-        </div>
-      </Router>
+          <div className="col-md-2 ">
+            <Sidebar/>
+          </div>
+          <div className="col-md-10">
+            <div>
+              <Switch>
+                <Route path="/" exact component={Dashboard} />
+                <Route path="/product" exact component={Product} />
+                <Route path="/brand" exact component={Brand} />
+              </Switch>
+            </div>
+          </div>
+        </Router>
+      </div>
     </div>
   );
 }
