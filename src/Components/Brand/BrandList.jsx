@@ -61,7 +61,7 @@ function BrandList({ show, setShow }) {
         <React.Fragment>
             <div className="row mt-2">
                 {!brandFetched ?
-                    <div className="col-12 text-center pt-5"><Loader type="TailSpin" color="#00BFFF" height={80} width={80} /></div>
+                    <div className="col-12 text-center pt-5"><Loader type="TailSpin" color="#0056b3" height={80} width={80} /></div>
                     : brand.map((brand) =>
                         <div className="col-12 col-md-6 col-lg-4 col-xl-3 mb-2" key={brand.id}>
                             <div className="card brand-card">
