@@ -1,32 +1,39 @@
-import React, { useState, useEffect } from 'react'
+import React,{useState,useEffect,useContext} from 'react'
 import BrandService from '../../Services/BrandService';
 import './brandlist.css';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons';
-import { Tooltip, OverlayTrigger } from 'react-bootstrap';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faTrash,faEdit} from '@fortawesome/free-solid-svg-icons';
+import {Tooltip,OverlayTrigger} from 'react-bootstrap';
 import BrandModal from '../Brand/BrandModal'
 import Loader from 'react-loader-spinner';
+import {BrandContext} from '../Brand/Brand'
 
 
-function BrandList({ show, setShow }) {
+function BrandList() {
+
+    const brandContext = useContext(BrandContext)
 
     const brandService = new BrandService();
-    const [update, setUpdate] = useState(false);
-    const [brand, setBrand] = useState([]);
-    const [brandFetched, isBrandFetched] = useState(false);
-    const [userHasWritePermission, setUserPermission] = useState(true);
+    const [update,setUpdate] = useState(false);
+    const [brand,setBrand] = useState([]);
+    const [brandFetched,isBrandFetched] = useState(false);
+    const [userHasWritePermission,setUserPermission] = useState(true);
 
-    const [updatedBrand, setUpdatedBrand] = useState([]);
+    const [updatedBrand,setUpdatedBrand] = useState([]);
 
-    useEffect(() => {
+    function findBrand() {
         brandService.findAllBrand()
             .then(res => {
                 setBrand(res);
-                setTimeout(()=> isBrandFetched(true),1000);
-                console.log(show,'show');
+                setTimeout(() => isBrandFetched(true),1000);
+                console.log('brandContext.showState',brandContext.showState);
             }
             )
-    }, [show]);
+    }
+
+    useEffect(() => {
+        findBrand()
+    },[brandContext.showState]);
     //isBrandFetched(false);
     // useEffect(() => {
     //     userService.userHasWritePermission()
@@ -51,19 +58,16 @@ function BrandList({ show, setShow }) {
 
     function deleteBrand(brand) {
         brandService.deleteBrand(brand)
-        .then(
-            brandService.findAllBrand()
-            .then(res => setBrand(res))
-        )
-        .catch(
-            console.log('unable to delete')
-        )
-        
+        findBrand();
+            // .then()
+            // .catch(
+            //     console.log('unable to delete')
+            // )
+
     }
 
     function updateBrand(brand) {
         setUpdatedBrand(brand);
-        setShow(true);
     }
 
     return (
@@ -83,7 +87,7 @@ function BrandList({ show, setShow }) {
                                         <div className="position-absolute delete-button d-inline-block cp delete-btn-position rounded-circle" onClick={() => deleteBrand(brand)}>
                                             <OverlayTrigger
                                                 placement="left"
-                                                delay={{ show: 10, hide: 10 }}
+                                                delay={{show: 10,hide: 10}}
                                                 overlay={deleteBrandToolTip}
                                             >
                                                 <div className="icon-center">  <FontAwesomeIcon icon={faTrash} size="xs" /> </div>
@@ -92,7 +96,7 @@ function BrandList({ show, setShow }) {
                                         <div className="position-absolute update-button d-inline-block cp update-btn-position rounded-circle" onClick={() => updateBrand(brand)}>
                                             <OverlayTrigger
                                                 placement="left"
-                                                delay={{ show: 10, hide: 10 }}
+                                                delay={{show: 10,hide: 10}}
                                                 overlay={updateBrandToolTip}
                                             >
                                                 <div className="icon-center">  <FontAwesomeIcon icon={faEdit} size="xs" /> </div>

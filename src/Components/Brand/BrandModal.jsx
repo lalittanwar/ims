@@ -1,10 +1,12 @@
-import React,{useState,useEffect} from 'react'
+import React,{useState,useEffect, useContext} from 'react'
 import {Button,Modal,Form} from 'react-bootstrap'
 import BrandService from '../../Services/BrandService'
+import {BrandContext} from '../Brand/Brand'
 
-function BrandModal({show,setShow,updatedBrand,setUpdatedBrand, update, setUpdate}) {
+function BrandModal({setShow,updatedBrand,setUpdatedBrand, update, setUpdate}) {
 
     const brandService = new BrandService();
+    const brandContext = useContext(BrandContext)
 
     const handleClose = () => setShow(false);
 
@@ -12,7 +14,7 @@ function BrandModal({show,setShow,updatedBrand,setUpdatedBrand, update, setUpdat
     const handleName = (event) => setProduct({...product,brand: event.target.value});
     const handleStatus = (event) => setProduct({...product,available: event.target.value});
 
-    // const handleUpdate = () => setUpdate(true);
+    const handleHide = () => brandContext.showDispatch('handleHide')
 
 
     const saveProduct = (event) => {
@@ -20,19 +22,16 @@ function BrandModal({show,setShow,updatedBrand,setUpdatedBrand, update, setUpdat
         setProduct({...product,id: product.id + 1});
         brandService.saveBrand(product);
         setProduct({id: 0,brand: '',available: true});
-        // handleUpdate();
-        handleClose();
+        handleHide();
     }
 
     useEffect(() => {
-        // setProduct(updatedBrand)
         console.log(updatedBrand,'brand in modal');
-        // console.log(show,'show');
     },[])
 
     return (
         <div className="p-2">
-            <Modal show={show}>
+            <Modal show={brandContext.showState}>
                 <Modal.Header closeButton onClick={() => setShow(false)}>
                     <Modal.Title>Add Brand</Modal.Title>
                 </Modal.Header>
