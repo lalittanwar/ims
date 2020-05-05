@@ -26,13 +26,18 @@ function BrandModal({setShow,updatedBrand,setUpdatedBrand, update, setUpdate}) {
     }
 
     useEffect(() => {
-        console.log(updatedBrand,'brand in modal');
-    },[])
+        console.log('updatedBrand',updatedBrand);
+        if(brandContext.isUpdate) {
+        setProduct(updatedBrand);
+        } else {
+            setProduct({id: 0,brand: '',available: true});
+        }
+    },[brandContext.showState])
 
     return (
         <div className="p-2">
             <Modal show={brandContext.showState}>
-                <Modal.Header closeButton onClick={() => setShow(false)}>
+                <Modal.Header closeButton onClick={handleHide}>
                     <Modal.Title>Add Brand</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -52,7 +57,7 @@ function BrandModal({setShow,updatedBrand,setUpdatedBrand, update, setUpdate}) {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="primary" type="submit" onClick={saveProduct}>Save Changes</Button>
-                    <Button variant="secondary" onClick={() => setShow(false)}>Close</Button>
+                    <Button variant="secondary" onClick={handleHide}>Close</Button>
                 </Modal.Footer>
             </Modal>
         </div>

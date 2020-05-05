@@ -34,11 +34,11 @@ function BrandList() {
     useEffect(() => {
         findBrand()
     },[brandContext.showState]);
-    //isBrandFetched(false);
-    // useEffect(() => {
-    //     userService.userHasWritePermission()
-    //         .then(res => setUserPermission(res))
-    // }, []);
+    /* isBrandFetched(false);
+    useEffect(() => {
+        userService.userHasWritePermission()
+            .then(res => setUserPermission(res))
+    }, []); */
 
     function deleteBrandToolTip(props) {
         return (
@@ -59,15 +59,14 @@ function BrandList() {
     function deleteBrand(brand) {
         brandService.deleteBrand(brand)
         findBrand();
-            // .then()
-            // .catch(
-            //     console.log('unable to delete')
-            // )
-
     }
 
     function updateBrand(brand) {
+        console.log('brand',brand);
         setUpdatedBrand(brand);
+        brandContext.dispatchUpdate('update')
+        brandContext.showDispatch('handleShow')
+        // setUpdatedBrand(brand);
     }
 
     return (
