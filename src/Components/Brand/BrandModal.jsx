@@ -3,7 +3,7 @@ import {Button,Modal,Form} from 'react-bootstrap'
 import BrandService from '../../Services/BrandService'
 import {BrandContext} from '../Brand/Brand'
 
-function BrandModal({setShow,updatedBrand,setUpdatedBrand,update,setUpdate}) {
+function BrandModal({updatedBrand}) {
 
     const brandService = new BrandService();
     const brandContext = useContext(BrandContext)
@@ -28,7 +28,8 @@ function BrandModal({setShow,updatedBrand,setUpdatedBrand,update,setUpdate}) {
         setProduct({...product,id: product.id + 1});
         brandService.saveBrand(product);
         setProduct({id: 0,brand: '',available: true});
-        handleHide();
+        setTimeout(() => handleHide(),0)
+        
     }
 
     const updateProduct = (event) => {

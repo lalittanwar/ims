@@ -14,11 +14,9 @@ function BrandList() {
     const brandContext = useContext(BrandContext)
 
     const brandService = new BrandService();
-    const [update,setUpdate] = useState(false);
     const [brand,setBrand] = useState([]);
     const [brandFetched,isBrandFetched] = useState(false);
     const [userHasWritePermission,setUserPermission] = useState(true);
-
     const [updatedBrand,setUpdatedBrand] = useState([]);
 
     function findBrand() {
