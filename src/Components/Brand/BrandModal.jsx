@@ -1,14 +1,12 @@
-import React,{useState,useEffect, useContext} from 'react'
+import React,{useState,useEffect,useContext} from 'react'
 import {Button,Modal,Form} from 'react-bootstrap'
 import BrandService from '../../Services/BrandService'
 import {BrandContext} from '../Brand/Brand'
 
-function BrandModal({setShow,updatedBrand,setUpdatedBrand, update, setUpdate}) {
+function BrandModal({setShow,updatedBrand,setUpdatedBrand,update,setUpdate}) {
 
     const brandService = new BrandService();
     const brandContext = useContext(BrandContext)
-
-    const handleClose = () => setShow(false);
 
     const [product,setProduct] = useState({id: 0,brand: '',available: true});
     const handleName = (event) => setProduct({...product,brand: event.target.value});
@@ -16,6 +14,14 @@ function BrandModal({setShow,updatedBrand,setUpdatedBrand, update, setUpdate}) {
 
     const handleHide = () => brandContext.showDispatch('handleHide')
 
+    useEffect(() => {
+        console.log('updatedBrand',updatedBrand);
+        if(brandContext.isUpdate) {
+            setProduct(updatedBrand);
+        } else {
+            setProduct({id: 0,brand: '',available: true});
+        }
+    },[brandContext.showState])
 
     const saveProduct = (event) => {
         event.preventDefault();
@@ -25,20 +31,18 @@ function BrandModal({setShow,updatedBrand,setUpdatedBrand, update, setUpdate}) {
         handleHide();
     }
 
-    useEffect(() => {
-        console.log('updatedBrand',updatedBrand);
-        if(brandContext.isUpdate) {
-        setProduct(updatedBrand);
-        } else {
-            setProduct({id: 0,brand: '',available: true});
-        }
-    },[brandContext.showState])
+    const updateProduct = (event) => {
+        event.preventDefault();
+        brandService.updateBrand(product);
+        handleHide();
+    }
+
 
     return (
         <div className="p-2">
             <Modal show={brandContext.showState}>
                 <Modal.Header closeButton onClick={handleHide}>
-                    <Modal.Title>Add Brand</Modal.Title>
+                    <Modal.Title>{updatedBrand ? 'Update Brand' : 'Add Brand'}</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <Form onSubmit={saveProduct}>
@@ -56,7 +60,8 @@ function BrandModal({setShow,updatedBrand,setUpdatedBrand, update, setUpdate}) {
                     </Form>
                 </Modal.Body>
                 <Modal.Footer>
-                    <Button variant="primary" type="submit" onClick={saveProduct}>Save Changes</Button>
+                    {updatedBrand ? <Button variant="success" type="submit" onClick={updateProduct}>Update</Button> :
+                        <Button variant="primary" type="submit" onClick={saveProduct}>Save Changes</Button>}
                     <Button variant="secondary" onClick={handleHide}>Close</Button>
                 </Modal.Footer>
             </Modal>
