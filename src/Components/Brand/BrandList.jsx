@@ -74,52 +74,54 @@ function BrandList() {
 
     return (
         <React.Fragment>
-            {/* <input
-                type="text"
-                placeholder="Search"
-                value={searchTerm}
-                onChange={handleChange}
-            /> */}
             <TextField id="standard-basic" label="Search Brand" type="text"
                 value={searchTerm}
-                onChange={handleChange} />
+                onChange={handleChange} /><br /><br />
             <div className="row mt-2">
                 {!brandFetched ?
                     <div className="col-12 text-center pt-5"><Loader type="TailSpin" color="#0056b3" height={80} width={80} /></div>
-                    : results.map((brand) =>
-                        <div className="col-12 col-md-6 col-lg-4 col-xl-3 mb-2" key={brand.id}>
-                <div className="card brand-card">
-                    <img className="card-img-top w-100" src="https://www.speedsecuregcc.com/uploads/products/default.jpg" alt="Brand image" />
-                    <div className="card-body">
-                        <p className="card-text mb-1">Brand :
-                                    <span className="text-primary text-bold text-uppercase font-weight-bold"> {brand.brand} </span>
-                        </p>
-                        <div className="position-relative">
-                            <div className="position-absolute delete-button d-inline-block cp delete-btn-position rounded-circle" onClick={() => deleteBrand(brand)}>
-                                <OverlayTrigger
-                                    placement="left"
-                                    delay={{show: 10,hide: 10}}
-                                    overlay={deleteBrandToolTip}
-                                >
-                                    <div className="icon-center">  <FontAwesomeIcon icon={faTrash} size="xs" /> </div>
-                                </OverlayTrigger>
-                            </div>
-                            <div className="position-absolute update-button d-inline-block cp update-btn-position rounded-circle" onClick={() => updateBrand(brand)}>
-                                <OverlayTrigger
-                                    placement="left"
-                                    delay={{show: 10,hide: 10}}
-                                    overlay={updateBrandToolTip}
-                                >
-                                    <div className="icon-center">  <FontAwesomeIcon icon={faEdit} size="xs" /> </div>
-                                </OverlayTrigger>
-                            </div>
-                        </div>
+                    :
+                    <div className="col-10 col-md-10 col-lg-10 col-xl-10 mb-2" key={brand.id}>
+                        <table className="table ">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Brand</th>
+                                    <th scope="col">Status</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            {results.map((brand) =>
+                                <tbody>
+                                    <tr>
+                                        <td>{brand.brand}</td>
+                                        <td>{brand.available ? (<span className="badge badge-success">Active</span>) : <span className="badge badge-danger">Inactive</span>}</td>
+                                        <div className="position-relative">
+                                            <div className="position-absolute delete-button d-inline-block cp delete-btn-position rounded-circle" onClick={() => deleteBrand(brand)}>
+                                                <OverlayTrigger
+                                                    placement="left"
+                                                    delay={{show: 10,hide: 10}}
+                                                    overlay={deleteBrandToolTip}
+                                                >
+                                                    <div className="icon-center">  <FontAwesomeIcon icon={faTrash} size="xs" /> </div>
+                                                </OverlayTrigger>
+                                            </div>
+                                            <div className="position-absolute update-button d-inline-block cp update-btn-position rounded-circle" onClick={() => updateBrand(brand)}>
+                                                <OverlayTrigger
+                                                    placement="left"
+                                                    delay={{show: 10,hide: 10}}
+                                                    overlay={updateBrandToolTip}
+                                                >
+                                                    <div className="icon-center">  <FontAwesomeIcon icon={faEdit} size="xs" /> </div>
+                                                </OverlayTrigger>
+                                            </div>
+                                        </div>
+                                    </tr>
+                                </tbody>)}
+                        </table>
                     </div>
-                </div>
+                }
             </div>
-                    )}
-            </div>
-        <BrandModal updatedBrand={updatedBrand} />
+            <BrandModal updatedBrand={updatedBrand} />
         </React.Fragment >
     )
 }
