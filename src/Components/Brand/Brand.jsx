@@ -1,11 +1,9 @@
-import React,{useState,useEffect,useReducer} from 'react'
-import {Button,Modal,Form,OverlayTrigger,Tooltip} from 'react-bootstrap'
-import BrandService from '../../Services/BrandService';
+import React,{useReducer} from 'react'
+import {OverlayTrigger,Tooltip} from 'react-bootstrap'
 import BrandList from './BrandList'
-import './brand.css';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlus} from '@fortawesome/free-solid-svg-icons';
-import {BrowserRouter as Router,Route,Switch} from 'react-router-dom'
+import './brand.css'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faPlus} from '@fortawesome/free-solid-svg-icons'
 import BrandModal from '../Brand/BrandModal'
 
 
@@ -13,6 +11,7 @@ export const BrandContext = React.createContext()
 
 const showInitial = false;
 const isUpdateInit = false;
+const alertInit = true;
 
 const reducer = (state,action) => {
     switch(action) {
@@ -25,7 +24,7 @@ const reducer = (state,action) => {
     }
 }
 
-const reducerUpdate = (state1,action) => {
+const reducerUpdate = (state,action) => {
     switch(action) {
         case 'update':
             return true
@@ -36,10 +35,23 @@ const reducerUpdate = (state1,action) => {
     }
 }
 
+const reducerAlert = (state,action) => {
+    switch(action) {
+        case 'alert':
+            return true
+        case 'noAlert':
+            return false
+        default:
+            return false
+    }
+}
+
+
 function Brand() {
 
     const [show,dispatch] = useReducer(reducer,showInitial)
     const [isUpdate,dispatchUpdate] = useReducer(reducerUpdate,isUpdateInit)
+    const [alert,dispatchAlert] = useReducer(reducerAlert,alertInit)
 
 
     function addItem() {
@@ -58,7 +70,7 @@ function Brand() {
 
     return (
         <React.Fragment>
-            <BrandContext.Provider value={{showState: show,showDispatch: dispatch,isUpdate:isUpdate,dispatchUpdate:dispatchUpdate}}>
+            <BrandContext.Provider value={{showState: show,showDispatch: dispatch,isUpdate:isUpdate,dispatchUpdate:dispatchUpdate, alert:alert,dispatchAlert:dispatchAlert}}>
                 <div className="p-2">
                     <div className="row">
                         <div className="col-12 col-sm-8 mb-2 mb-sm-0" > <h4>Brand</h4> </div>

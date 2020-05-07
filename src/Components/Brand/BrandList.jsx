@@ -20,6 +20,8 @@ function BrandList() {
     const [updatedBrand,setUpdatedBrand] = useState([]);
     const [searchTerm,setSearchTerm] = useState("");
 
+    const alert = () => brandContext.dispatchAlert('alert')
+
     function findBrand() {
         return brandService.findAllBrand()
             .then(res => {
@@ -38,6 +40,7 @@ function BrandList() {
 
     useEffect(() => {
         findBrand()
+        setTimeout(() => brandContext.dispatchAlert('alert'),3000)
     },[brandContext.showState]);
     /* isBrandFetched(false);
     useEffect(() => {
@@ -74,9 +77,21 @@ function BrandList() {
 
     return (
         <React.Fragment>
+            <br />
+            {!brandContext.alert ? 
+            (brandContext.isUpdate ? 
+            (<div className="alert alert-primary alert-dismissible fade show">
+                Successfully Updated.
+                <button type="button" className="close" data-dismiss="alert">&times;</button>
+            </div>) :
+            (<div className="alert alert-success alert-dismissible fade show">
+                Successfully Saved.
+                <button type="button" className="close" data-dismiss="alert">&times;</button>
+            </div>)) : null}
             <TextField id="standard-basic" label="Search Brand" type="text"
                 value={searchTerm}
-                onChange={handleChange} /><br /><br />
+                onChange={handleChange} />
+            <br /><br />
             <div className="row mt-2">
                 {!brandFetched ?
                     <div className="col-12 text-center pt-5"><Loader type="TailSpin" color="#0056b3" height={80} width={80} /></div>

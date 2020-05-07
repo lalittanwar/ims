@@ -13,6 +13,8 @@ function BrandModal({updatedBrand}) {
     const handleStatus = (event) => setProduct({...product,available: event.target.value});
 
     const handleHide = () => brandContext.showDispatch('handleHide')
+    const noAlert = () => brandContext.dispatchAlert('noAlert')
+    const alert = () => brandContext.dispatchAlert('alert')
 
     useEffect(() => {
         console.log('updatedBrand',updatedBrand);
@@ -25,17 +27,21 @@ function BrandModal({updatedBrand}) {
 
     const saveProduct = (event) => {
         event.preventDefault();
+        alert()
         setProduct({...product,id: product.id + 1});
         brandService.saveBrand(product);
         setProduct({id: 0,brand: '',available: true});
         setTimeout(() => handleHide(),0)
+        noAlert()
         
     }
 
     const updateProduct = (event) => {
         event.preventDefault();
+        alert()
         brandService.updateBrand(product);
         handleHide();
+        noAlert()
     }
 
 
