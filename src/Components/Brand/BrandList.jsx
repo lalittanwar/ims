@@ -1,11 +1,11 @@
 import React,{useState,useEffect,useContext} from 'react'
-import BrandService from '../../Services/BrandService';
-import './brandlist.css';
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faTrash,faEdit} from '@fortawesome/free-solid-svg-icons';
-import {Tooltip,OverlayTrigger} from 'react-bootstrap';
+import BrandService from '../../Services/BrandService'
+import './brandlist.css'
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faTrash,faEdit} from '@fortawesome/free-solid-svg-icons'
+import {Tooltip,OverlayTrigger} from 'react-bootstrap'
 import BrandModal from '../Brand/BrandModal'
-import Loader from 'react-loader-spinner';
+import Loader from 'react-loader-spinner'
 import {BrandContext} from '../Brand/Brand'
 import TextField from '@material-ui/core/TextField'
 
@@ -13,26 +13,27 @@ function BrandList() {
 
     const brandContext = useContext(BrandContext)
 
-    const brandService = new BrandService();
-    const [brand,setBrand] = useState([]);
-    const [brandFetched,isBrandFetched] = useState(false);
-    const [userHasWritePermission,setUserPermission] = useState(true);
-    const [updatedBrand,setUpdatedBrand] = useState([]);
-    const [searchTerm,setSearchTerm] = useState("");
+    const brandService = new BrandService()
+    const [brand,setBrand] = useState([])
+    const [brandFetched,isBrandFetched] = useState(false)
+    const [userHasWritePermission,setUserPermission] = useState(true)
+    const [updatedBrand,setUpdatedBrand] = useState([])
+    const [searchTerm,setSearchTerm] = useState("")
+    const [deleteAlert,setDeleteAlert] = useState(false)
 
     const alert = () => brandContext.dispatchAlert('alert')
 
     function findBrand() {
         return brandService.findAllBrand()
             .then(res => {
-                setBrand(res);
-                setTimeout(() => isBrandFetched(true),1000);
+                setBrand(res)
+                setTimeout(() => isBrandFetched(true),1000)
             })
     }
 
     const handleChange = event => {
-        setSearchTerm(event.target.value);
-    };
+        setSearchTerm(event.target.value)
+    }
 
     const results = brand.filter(brands => {
         return brands.brand.toLowerCase().includes(searchTerm.toLowerCase())
@@ -41,19 +42,19 @@ function BrandList() {
     useEffect(() => {
         findBrand()
         setTimeout(() => brandContext.dispatchAlert('alert'),3000)
-    },[brandContext.showState]);
-    /* isBrandFetched(false);
+    },[brandContext.showState])
+    /* isBrandFetched(false)
     useEffect(() => {
         userService.userHasWritePermission()
             .then(res => setUserPermission(res))
-    }, []); */
+    }, []) */
 
     function deleteBrandToolTip(props) {
         return (
             <Tooltip id="button-tooltip" {...props}>
                 Delete brand
             </Tooltip>
-        );
+        )
     }
 
     function updateBrandToolTip(props) {
@@ -61,16 +62,18 @@ function BrandList() {
             <Tooltip id="button-tooltip" {...props}>
                 Update brand
             </Tooltip>
-        );
+        )
     }
 
     function deleteBrand(brand) {
+        setDeleteAlert(true)
         brandService.deleteBrand(brand)
         findBrand()
+        setTimeout(() => setDeleteAlert(false),3000)
     }
 
     function updateBrand(brand) {
-        setUpdatedBrand(brand);
+        setUpdatedBrand(brand)
         brandContext.dispatchUpdate('update')
         brandContext.showDispatch('handleShow')
     }
@@ -78,15 +81,16 @@ function BrandList() {
     return (
         <React.Fragment>
             <br />
+            {deleteAlert ? (<div className="alert alert-danger alert-dismissible fade show">
+                Successfully Deleted.
+            </div>) : null}
             {!brandContext.alert ? 
             (brandContext.isUpdate ? 
             (<div className="alert alert-primary alert-dismissible fade show">
                 Successfully Updated.
-                <button type="button" className="close" data-dismiss="alert">&times;</button>
             </div>) :
             (<div className="alert alert-success alert-dismissible fade show">
                 Successfully Saved.
-                <button type="button" className="close" data-dismiss="alert">&times;</button>
             </div>)) : null}
             <TextField id="standard-basic" label="Search Brand" type="text"
                 value={searchTerm}
@@ -141,4 +145,4 @@ function BrandList() {
     )
 }
 
-export default BrandList;
+export default BrandList

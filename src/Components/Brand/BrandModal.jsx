@@ -40,7 +40,7 @@ function BrandModal({updatedBrand}) {
         event.preventDefault();
         alert()
         brandService.updateBrand(product);
-        handleHide();
+        setTimeout(() => handleHide(),0)
         noAlert()
     }
 
