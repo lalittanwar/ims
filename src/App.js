@@ -1,16 +1,16 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch ,HashRouter} from 'react-router-dom'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import Sidebar from './Components/Sidebar/Sidebar';
 import Product from './Components/Product/Product';
 import Topbar from './Components/Topbar/Topbar';
-import Brand from './Components/Brand/Brand';
+import Brand from './Components/Brand/Brand.jsx';
 import Dashboard from './Components/Dashboard/Dashboard';
 import PrivateRoute from './Router/PrivateRoute';
 import Login from './Components/Login/Login';
+import Logout from './Components/Logout/Logout';
 import PublicRoute from './Router/PublicRoute';
 import LoginService from './Services/LoginService';
-
 
 const loginService = new LoginService();
 
@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <HashRouter>
+        <Router>
           {loginService.isUserLoggedIn() ?
             <React.Fragment>
               <div className="col-12 bg-dark">
@@ -33,10 +33,11 @@ function App() {
               <PrivateRoute restricted={false} path="/" exact component={Dashboard} />
               <PrivateRoute restricted={false} path="/product" exact component={Product} />
               <PrivateRoute restricted={false} path="/brand" exact component={Brand} />
-              <PublicRoute restricted={true}  path="/login" exact component={Login} />
+              <PrivateRoute restricted={false} path="/logout" exact component={Logout} />
+              <PublicRoute restricted={true} component={Login} path="/login" exact />
             </Switch>
           </div>
-        </HashRouter>
+        </Router>
       </div>
     </div>
   );

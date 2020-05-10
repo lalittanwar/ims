@@ -1,61 +1,78 @@
 import axios from 'axios';
 import React from 'react'
-import { Redirect } from 'react-router-dom';
+import LogoutService from './LogoutService';
 import LoginService from './LoginService';
 
 class RequestService extends React.Component {
 
     constructor() {
         super();
+        this.logoutService = new LogoutService();
         this.loginService = new LoginService();
     }
 
     getRequest = function (url) {
-        const token = this.loginService.getLoginTokenKey();
+        const token = this.loginService.getLoginToken();
         const headers = {
-            'token': `${token}`,
-            'Content-Type': 'application/json'
+            "token" : token
         };
-        return axios.get(url, { headers })
+        return axios({
+            method: 'GET',
+            url: url,
+            headers : headers
+            
+        })
             .then(response => { return Promise.resolve(response.data) })
-            .catch(error => this.errorHandler(error));
+            .catch(error => this.handleError(error));
     }
 
     postRequest = function (url, object) {
-        return axios.post(url, object)
+        const token = this.loginService.getLoginToken();
+        const headers = {
+            "token" : token
+        };
+        return axios({
+            method: 'POST',
+            url: url,
+            data: object,
+            headers : headers
+        })
             .then(response => { return Promise.resolve(response.data) })
-            .catch(error => this.errorHandler(error));
+            .catch(error => this.handleError(error));
     }
 
     deleteRequest = function (url, object) {
         return axios({
-            method: 'delete',
+            method: 'DELETE',
             url: url,
             data: object
         })
             .then(response => { return Promise.resolve(response.data) })
-            .catch(error => this.errorHandler(error));
+            .catch(error => this.handleError(error));
     }
 
     updateRequest = function (url, object) {
         return axios({
-            method: 'put',
+            method: 'PUT',
             url: url,
             data: object
         })
             .then(response => { return Promise.resolve(response.data) })
-            .catch(error => this.errorHandler(error));
+            .catch(error => this.handleError(error));
     }
 
-    errorHandler = function (error) {
-        alert(error)
+    handleError = (error) => {
         const response = error.response;
-        if (response && response!=undefined) {
-            const statusCode = error.response.status;
-            if (statusCode && statusCode == 401)
-                return <Redirect to="/login" />
+        if (response && response != undefined) {
+            const status = response.status;
+            if (status && status != undefined && status == 401) {
+                this.logoutService.logout();
+            } else {
+                return Promise.reject(error);
+            }
+        } else {
+            return Promise.reject(error);
         }
-        return Promise.reject(error);
     }
 }
 

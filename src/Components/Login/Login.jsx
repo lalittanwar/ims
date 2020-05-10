@@ -21,9 +21,6 @@ export default function Login() {
       password : password
     }
     loginService.requestToLoginUser(userObj)
-    .then(loggedIn => {window.location.href = "/"})
-    .catch(msg =>  alert(msg));
-
   }
 
   return (
