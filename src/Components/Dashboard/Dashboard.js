@@ -9,7 +9,7 @@ export class Dashboard extends Component {
 
         });
         this.brandService = new BrandService();
-        this.brandService.findAllBrand();
+        // this.brandService.findAllBrand();
     }
 
    componentDidMount(){
