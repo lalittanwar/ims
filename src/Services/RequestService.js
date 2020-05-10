@@ -42,20 +42,30 @@ class RequestService extends React.Component {
     }
 
     deleteRequest = function (url, object) {
+        const token = this.loginService.getLoginToken();
+        const headers = {
+            "token" : token
+        };
         return axios({
             method: 'DELETE',
             url: url,
-            data: object
+            data: object,
+            headers : headers
         })
             .then(response => { return Promise.resolve(response.data) })
             .catch(error => this.handleError(error));
     }
 
     updateRequest = function (url, object) {
+        const token = this.loginService.getLoginToken();
+        const headers = {
+            "token" : token
+        };
         return axios({
             method: 'PUT',
             url: url,
-            data: object
+            data: object,
+            headers : headers
         })
             .then(response => { return Promise.resolve(response.data) })
             .catch(error => this.handleError(error));
