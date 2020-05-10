@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Switch ,HashRouter} from 'react-router-dom'
 import Sidebar from './Components/Sidebar/Sidebar';
 import Product from './Components/Product/Product';
 import Topbar from './Components/Topbar/Topbar';
@@ -18,7 +18,7 @@ function App() {
   return (
     <div className="container-fluid">
       <div className="row">
-        <Router>
+        <HashRouter>
           {loginService.isUserLoggedIn() ?
             <React.Fragment>
               <div className="col-12 bg-dark">
@@ -36,7 +36,7 @@ function App() {
               <PublicRoute restricted={true}  path="/login" exact component={Login} />
             </Switch>
           </div>
-        </Router>
+        </HashRouter>
       </div>
     </div>
   );

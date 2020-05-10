@@ -1,29 +1,30 @@
 import axios from 'axios';
 import React from 'react'
+import { Redirect } from 'react-router-dom';
+import LoginService from './LoginService';
 
 class RequestService extends React.Component {
 
     constructor() {
         super();
+        this.loginService = new LoginService();
     }
 
     getRequest = function (url) {
-        const token = 'eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJDb0l6N3IxckJvM0N3dTd5c3A2SnJRPT0iLCJjb250YWN0IjoiMkY0ZDJIanpzd0VoangrWmszSGlyQT09IiwibmFtZSI6Ik5hcnBhdCIsImlkIjoxLCJleHAiOjE1ODg4ODE4NzksImlhdCI6MTU4ODg2Mzg3OSwiZW1haWwiOiJDb0l6N3IxckJvM0N3dTd5c3A2SnJRPT0ifQ.6otY1ITtC6QWHENZ1RV8BRu1M3EeBiqeVkZNetpZyCQRO6CdPNOqbugfhpmuUik_2Mwp8rX95v6Ww1e5zIp97g';
-        const headers = { 'token': `${token}` };
-        console.log('headers',headers)
-        return axios.get(url, {headers})
+        const token = this.loginService.getLoginTokenKey();
+        const headers = {
+            'token': `${token}`,
+            'Content-Type': 'application/json'
+        };
+        return axios.get(url, { headers })
             .then(response => { return Promise.resolve(response.data) })
-            .catch(error => { return Promise.reject(error) });
+            .catch(error => this.errorHandler(error));
     }
 
     postRequest = function (url, object) {
         return axios.post(url, object)
-            .then(response => {
-                return Promise.resolve(response.data);
-            })
-            .catch(error => {
-                return Promise.reject(error);
-            });
+            .then(response => { return Promise.resolve(response.data) })
+            .catch(error => this.errorHandler(error));
     }
 
     deleteRequest = function (url, object) {
@@ -33,7 +34,7 @@ class RequestService extends React.Component {
             data: object
         })
             .then(response => { return Promise.resolve(response.data) })
-            .catch(error => { return Promise.reject(error) });
+            .catch(error => this.errorHandler(error));
     }
 
     updateRequest = function (url, object) {
@@ -43,7 +44,18 @@ class RequestService extends React.Component {
             data: object
         })
             .then(response => { return Promise.resolve(response.data) })
-            .catch(error => { return Promise.reject(error) });
+            .catch(error => this.errorHandler(error));
+    }
+
+    errorHandler = function (error) {
+        alert(error)
+        const response = error.response;
+        if (response && response!=undefined) {
+            const statusCode = error.response.status;
+            if (statusCode && statusCode == 401)
+                return <Redirect to="/login" />
+        }
+        return Promise.reject(error);
     }
 }
 
