@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import { HashRouter as Router, Route, Switch } from 'react-router-dom'
 import Sidebar from './Components/Sidebar/Sidebar';
 import Product from './Components/Product/Product';
 import Topbar from './Components/Topbar/Topbar';
@@ -8,9 +8,9 @@ import Brand from './Components/Brand/Brand.jsx';
 import Dashboard from './Components/Dashboard/Dashboard';
 import PrivateRoute from './Router/PrivateRoute';
 import Login from './Components/Login/Login';
+import Logout from './Components/Logout/Logout';
 import PublicRoute from './Router/PublicRoute';
 import LoginService from './Services/LoginService';
-import UrlUtils from './Utils/UrlUtils';
 
 const loginService = new LoginService();
 
@@ -33,6 +33,7 @@ function App() {
               <PrivateRoute restricted={false} path="/" exact component={Dashboard} />
               <PrivateRoute restricted={false} path="/product" exact component={Product} />
               <PrivateRoute restricted={false} path="/brand" exact component={Brand} />
+              <PrivateRoute restricted={false} path="/logout" exact component={Logout} />
               <PublicRoute restricted={true} component={Login} path="/login" exact />
             </Switch>
           </div>

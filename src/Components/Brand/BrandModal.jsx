@@ -25,9 +25,6 @@ function BrandModal({show,setShow,updatedBrand,setUpdatedBrand, update, setUpdat
     }
 
     useEffect(() => {
-        // setProduct(updatedBrand)
-        console.log(updatedBrand,'brand in modal');
-        // console.log(show,'show');
     },[])
 
     return (

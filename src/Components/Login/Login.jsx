@@ -16,14 +16,8 @@ export default function Login() {
 
   function handleSubmit(event) {
     event.preventDefault();
-    let userObj = {
-      email : email,
-      password : password
-    }
+    let userObj = {email,password}
     loginService.requestToLoginUser(userObj)
-    .then(loggedIn => {window.location.href = "/"})
-    .catch(msg =>  alert(msg));
-
   }
 
   return (
