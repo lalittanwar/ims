@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { Button, FormGroup, FormControl } from "react-bootstrap";
+import React,{useState} from "react";
+import {Button,FormGroup,FormControl} from "react-bootstrap";
 import "./Login.css";
 import LoginService from "../../Services/LoginService";
 
 
 export default function Login() {
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  var loginService  = new LoginService();
+  const [email,setEmail] = useState("");
+  const [password,setPassword] = useState("");
+  var loginService = new LoginService();
 
   function validateForm() {
     return email.length > 0 && password.length > 0;
@@ -17,8 +17,8 @@ export default function Login() {
   function handleSubmit(event) {
     event.preventDefault();
     let userObj = {
-      email : email,
-      password : password
+      email: email,
+      password: password
     }
     loginService.requestToLoginUser(userObj)
   }
@@ -27,7 +27,7 @@ export default function Login() {
     <div className="Login">
       <form onSubmit={handleSubmit}>
         <FormGroup controlId="email" bsSize="large">
-        Email
+          Email
           <FormControl
             autoFocus
             type="email"
@@ -36,7 +36,7 @@ export default function Login() {
           />
         </FormGroup>
         <FormGroup controlId="password" bsSize="large">
-        Password
+          Password
           <FormControl
             value={password}
             onChange={e => setPassword(e.target.value)}
