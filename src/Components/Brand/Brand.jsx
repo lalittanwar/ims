@@ -57,7 +57,7 @@ function Brand() {
     function addItem() {
         dispatchUpdate('noUpdate')
         dispatch('handleShow')
-        console.log('1',isUpdate);
+        // console.log('1',isUpdate);
     }
 
     function addBrandTooltip(props) {
@@ -89,7 +89,7 @@ function Brand() {
                         </div>
                     </div>
                     <BrandList />
-                    {isUpdate ? null :<BrandModal />}
+                    {/* {isUpdate ? null :<BrandModal />} */}
                 </div>
             </BrandContext.Provider>
         </React.Fragment>

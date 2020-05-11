@@ -8,6 +8,7 @@ import BrandModal from '../Brand/BrandModal'
 import Loader from 'react-loader-spinner'
 import {BrandContext} from '../Brand/Brand'
 import TextField from '@material-ui/core/TextField'
+import DeleteModal from '../Common/DeleteModal'
 
 function BrandList() {
 
@@ -19,11 +20,19 @@ function BrandList() {
     const [userHasWritePermission,setUserPermission] = useState(true)
     const [updatedBrand,setUpdatedBrand] = useState([])
     const [searchTerm,setSearchTerm] = useState("")
-    const [deleteAlert,setDeleteAlert] = useState(false)
+    const [deleteModal,setDeleteModal] = useState(false)
+    const [addModal,setAddModal] = useState(true)
+    const [deletedBrand,setDeleteBrand] = useState([])
 
-    const alert = () => brandContext.dispatchAlert('alert')
+
+    const showDeleteModal = () => setDeleteModal(true)
+    const HideDeleteModal = () => setDeleteModal(false)
+
+    const showAddModal = () => setAddModal(true)
+    const HideAddModal = () => setAddModal(false)
 
     function findBrand() {
+        showAddModal()
         return brandService.findAllBrand()
             .then(res => {
                 setBrand(res)
@@ -42,12 +51,10 @@ function BrandList() {
     useEffect(() => {
         findBrand()
         setTimeout(() => brandContext.dispatchAlert('alert'),3000)
-    },[brandContext.showState])
-    /* isBrandFetched(false)
-    useEffect(() => {
-        userService.userHasWritePermission()
-            .then(res => setUserPermission(res))
-    }, []) */
+        console.log('brandContext.showState',brandContext.showState)
+        console.log('addModal',addModal);
+    },[addModal,deleteModal])
+
 
     function deleteBrandToolTip(props) {
         return (
@@ -66,10 +73,11 @@ function BrandList() {
     }
 
     function deleteBrand(brand) {
-        setDeleteAlert(true)
-        brandService.deleteBrand(brand)
-        findBrand()
-        setTimeout(() => setDeleteAlert(false),3000)
+        setDeleteBrand(brand)
+        showDeleteModal()
+        // brandContext.showDispatch('handleShow')
+        // findBrand()
+        // setTimeout(() => setDeleteAlert(false),3000)
     }
 
     function updateBrand(brand) {
@@ -81,17 +89,17 @@ function BrandList() {
     return (
         <React.Fragment>
             <br />
-            {deleteAlert ? (<div className="alert alert-danger alert-dismissible fade show">
+            {!brandContext.alert ? (deleteModal ? (<div className="alert alert-danger alert-dismissible fade show">
                 Successfully Deleted.
-            </div>) : null}
-            {!brandContext.alert ? 
-            (brandContext.isUpdate ? 
-            (<div className="alert alert-primary alert-dismissible fade show">
-                Successfully Updated.
-            </div>) :
-            (<div className="alert alert-success alert-dismissible fade show">
-                Successfully Saved.
-            </div>)) : null}
+            </div>) : null) : null}
+            {!brandContext.alert ?
+                (brandContext.isUpdate ?
+                    (<div className="alert alert-primary alert-dismissible fade show">
+                        Successfully Updated.
+                    </div>) :
+                    (<div className="alert alert-success alert-dismissible fade show">
+                        Successfully Saved.
+                    </div>)) : null}
             <TextField id="standard-basic" label="Search Brand" type="text"
                 value={searchTerm}
                 onChange={handleChange} />
@@ -110,7 +118,7 @@ function BrandList() {
                                 </tr>
                             </thead>
                             {results.map((brand) =>
-                                <tbody>
+                                <tbody key={brand.id}>
                                     <tr>
                                         <td>{brand.brand}</td>
                                         <td>{brand.available ? (<span className="badge badge-success">Active</span>) : <span className="badge badge-danger">Inactive</span>}</td>
@@ -140,7 +148,13 @@ function BrandList() {
                     </div>
                 }
             </div>
-            <BrandModal updatedBrand={updatedBrand} />
+            {brandContext.isUpdate ? (<BrandModal updatedBrand={updatedBrand} />) :
+                (<BrandModal HideAddModal={HideAddModal}
+                    addModal={addModal} />)
+            }
+
+            <DeleteModal deleteModal={deleteModal}
+                deletedBrand={deletedBrand} HideDeleteModal={HideDeleteModal} />
         </React.Fragment >
     )
 }
