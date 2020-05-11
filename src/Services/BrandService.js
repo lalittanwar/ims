@@ -24,7 +24,7 @@ class BrandService extends React.Component {
 
     saveBrand = function (object) {
         const url = process.env.REACT_APP_API_PRODUCT_SERVICE + "brand/";
-        this.requestService.postRequest(url,object)
+        return this.requestService.postRequest(url,object)
             .then(response => {return Promise.resolve(response);})
             .catch(error => {return Promise.reject(error);});
     }

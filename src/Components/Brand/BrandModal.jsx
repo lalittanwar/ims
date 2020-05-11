@@ -28,12 +28,18 @@ function BrandModal({updatedBrand,HideAddModal,addModal}) {
     const saveProduct = (event) => {
         event.preventDefault();
         alert()
-        setProduct({...product,id: product.id + 1});
-        brandService.saveBrand(product);
-        setProduct({id: 0,brand: '',available: true});
-        setTimeout(() => handleHide(),0)
-        setTimeout(() => HideAddModal(),0)
-        noAlert()  
+        setProduct({...product,id: product.id + 1})
+        brandService.saveBrand(product)
+        .then(res => {
+            setProduct({id: 0,brand: '',available: true})
+            setTimeout(() => handleHide(),0)
+            setTimeout(() => HideAddModal(),0)
+            noAlert()  
+        })
+        .catch(error => {
+            alert(error)
+        })
+      
     }
 
     const updateProduct = (event) => {
