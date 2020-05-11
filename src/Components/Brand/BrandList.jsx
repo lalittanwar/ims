@@ -21,7 +21,6 @@ function BrandList(props) {
     const [brandFetched,isBrandFetched] = useState(false)
     const [userHasWritePermission,setUserPermission] = useState(true)
     const [updatedBrand,setUpdatedBrand] = useState([])
-    const [searchTerm,setSearchTerm] = useState("")
     const [deleteModal,setDeleteModal] = useState(false)
     const [addModal,setAddModal] = useState(true)
     const [deletedBrand,setDeleteBrand] = useState([])
