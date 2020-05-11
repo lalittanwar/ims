@@ -1,20 +1,22 @@
-import React,{useState,useEffect,useContext} from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import BrandService from '../../Services/BrandService'
 import './brandlist.css'
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faTrash,faEdit} from '@fortawesome/free-solid-svg-icons'
-import {Tooltip,OverlayTrigger} from 'react-bootstrap'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faTrash, faEdit } from '@fortawesome/free-solid-svg-icons'
+import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import BrandModal from '../Brand/BrandModal'
 import Loader from 'react-loader-spinner'
-import {BrandContext} from '../Brand/Brand'
+import { BrandContext } from '../Brand/Brand'
 import TextField from '@material-ui/core/TextField'
 import DeleteModal from '../Common/DeleteModal'
+import UserService from '../../Services/UserService'
 
 function BrandList() {
 
     const brandContext = useContext(BrandContext)
 
     const brandService = new BrandService()
+    const userService = new UserService()
     const [brand,setBrand] = useState([])
     const [brandFetched,isBrandFetched] = useState(false)
     const [userHasWritePermission,setUserPermission] = useState(true)
@@ -36,7 +38,7 @@ function BrandList() {
         return brandService.findAllBrand()
             .then(res => {
                 setBrand(res)
-                setTimeout(() => isBrandFetched(true),1000)
+                setTimeout(() => isBrandFetched(true), 1000)
             })
     }
 
@@ -49,12 +51,13 @@ function BrandList() {
     })
 
     useEffect(() => {
-        findBrand()
-        setTimeout(() => brandContext.dispatchAlert('alert'),3000)
-        console.log('brandContext.showState',brandContext.showState)
-        console.log('addModal',addModal);
-    },[addModal,deleteModal])
+        setUserPermission(userService.userHasWritePermission());
+    })
 
+    useEffect(() => {
+        findBrand()
+        setTimeout(() => brandContext.dispatchAlert('alert'), 3000)
+    }, [brandContext.showState,addModal,deleteModal])
 
     function deleteBrandToolTip(props) {
         return (
@@ -122,26 +125,29 @@ function BrandList() {
                                     <tr>
                                         <td>{brand.brand}</td>
                                         <td>{brand.available ? (<span className="badge badge-success">Active</span>) : <span className="badge badge-danger">Inactive</span>}</td>
-                                        <div className="position-relative">
-                                            <div className="position-absolute delete-button d-inline-block cp delete-btn-position rounded-circle" onClick={() => deleteBrand(brand)}>
-                                                <OverlayTrigger
-                                                    placement="left"
-                                                    delay={{show: 10,hide: 10}}
-                                                    overlay={deleteBrandToolTip}
-                                                >
-                                                    <div className="icon-center">  <FontAwesomeIcon icon={faTrash} size="xs" /> </div>
-                                                </OverlayTrigger>
+                                        {userHasWritePermission ? <React.Fragment>
+                                            <div className="position-relative">
+                                                <div className="position-absolute delete-button d-inline-block cp delete-btn-position rounded-circle" onClick={() => deleteBrand(brand)}>
+                                                    <OverlayTrigger
+                                                        placement="top"
+                                                        delay={{ show: 10, hide: 10 }}
+                                                        overlay={deleteBrandToolTip}
+                                                    >
+                                                        <div className="icon-center">  <FontAwesomeIcon icon={faTrash} size="xs" /> </div>
+                                                    </OverlayTrigger>
+                                                </div>
+                                                <div className="position-absolute update-button d-inline-block cp update-btn-position rounded-circle" onClick={() => updateBrand(brand)}>
+                                                    <OverlayTrigger
+                                                        placement="top"
+                                                        delay={{ show: 10, hide: 10 }}
+                                                        overlay={updateBrandToolTip}
+                                                    >
+                                                        <div className="icon-center">  <FontAwesomeIcon icon={faEdit} size="xs" /> </div>
+                                                    </OverlayTrigger>
+                                                </div>
                                             </div>
-                                            <div className="position-absolute update-button d-inline-block cp update-btn-position rounded-circle" onClick={() => updateBrand(brand)}>
-                                                <OverlayTrigger
-                                                    placement="left"
-                                                    delay={{show: 10,hide: 10}}
-                                                    overlay={updateBrandToolTip}
-                                                >
-                                                    <div className="icon-center">  <FontAwesomeIcon icon={faEdit} size="xs" /> </div>
-                                                </OverlayTrigger>
-                                            </div>
-                                        </div>
+                                        </React.Fragment> : null}
+
                                     </tr>
                                 </tbody>)}
                         </table>
