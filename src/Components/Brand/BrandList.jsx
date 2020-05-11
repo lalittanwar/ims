@@ -7,22 +7,36 @@ import { Tooltip, OverlayTrigger } from 'react-bootstrap'
 import BrandModal from '../Brand/BrandModal'
 import Loader from 'react-loader-spinner'
 import { BrandContext } from '../Brand/Brand'
+import TextField from '@material-ui/core/TextField'
+import DeleteModal from '../Common/DeleteModal'
 import UserService from '../../Services/UserService'
 
 function BrandList(props) {
 
     const brandContext = useContext(BrandContext)
-    const brandService = new BrandService();
-    const userService = new UserService();
-    const [brand, setBrand] = useState([]);
-    const [brandFetched, isBrandFetched] = useState(false);
-    const [userHasWritePermission, setUserPermission] = useState(false);
-    const [updatedBrand, setUpdatedBrand] = useState([]);
-    const [deleteAlert, setDeleteAlert] = useState(false);
+
+    const brandService = new BrandService()
+    const userService = new UserService()
+    const [brand,setBrand] = useState([])
+    const [brandFetched,isBrandFetched] = useState(false)
+    const [userHasWritePermission,setUserPermission] = useState(true)
+    const [updatedBrand,setUpdatedBrand] = useState([])
+    const [searchTerm,setSearchTerm] = useState("")
+    const [deleteModal,setDeleteModal] = useState(false)
+    const [addModal,setAddModal] = useState(true)
+    const [deletedBrand,setDeleteBrand] = useState([])
     const [updatedBrandList, setUpdatedBrandsList] = useState([]);
     const { searchBrand } = props;
 
+
+    const showDeleteModal = () => setDeleteModal(true)
+    const HideDeleteModal = () => setDeleteModal(false)
+
+    const showAddModal = () => setAddModal(true)
+    const HideAddModal = () => setAddModal(false)
+
     function findBrand() {
+        showAddModal()
         return brandService.findAllBrand()
             .then(res => {
                 setBrand(res)
@@ -41,7 +55,7 @@ function BrandList(props) {
     useEffect(() => {
         findBrand()
         setTimeout(() => brandContext.dispatchAlert('alert'), 3000)
-    }, [brandContext.showState])
+    }, [brandContext.showState,addModal,deleteModal])
 
     function deleteBrandToolTip(props) {
         return (
@@ -60,10 +74,11 @@ function BrandList(props) {
     }
 
     function deleteBrand(brand) {
-        setDeleteAlert(true)
-        brandService.deleteBrand(brand)
-        findBrand()
-        setTimeout(() => setDeleteAlert(false), 3000)
+        setDeleteBrand(brand)
+        showDeleteModal()
+        // brandContext.showDispatch('handleShow')
+        // findBrand()
+        // setTimeout(() => setDeleteAlert(false),3000)
     }
 
     function updateBrand(brand) {
@@ -75,9 +90,9 @@ function BrandList(props) {
     return (
         <React.Fragment>
             <br />
-            {deleteAlert ? (<div className="alert alert-danger alert-dismissible fade show">
+            {!brandContext.alert ? (deleteModal ? (<div className="alert alert-danger alert-dismissible fade show">
                 Successfully Deleted.
-            </div>) : null}
+            </div>) : null) : null}
             {!brandContext.alert ?
                 (brandContext.isUpdate ?
                     (<div className="alert alert-primary alert-dismissible fade show">
@@ -134,7 +149,13 @@ function BrandList(props) {
                     </div>
                 }
             </div>
-            <BrandModal updatedBrand={updatedBrand} />
+            {brandContext.isUpdate ? (<BrandModal updatedBrand={updatedBrand} />) :
+                (<BrandModal HideAddModal={HideAddModal}
+                    addModal={addModal} />)
+            }
+
+            <DeleteModal deleteModal={deleteModal}
+                deletedBrand={deletedBrand} HideDeleteModal={HideDeleteModal} />
         </React.Fragment >
     )
 }

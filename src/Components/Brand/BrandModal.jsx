@@ -3,7 +3,7 @@ import {Button,Modal,Form} from 'react-bootstrap'
 import BrandService from '../../Services/BrandService'
 import {BrandContext} from '../Brand/Brand'
 
-function BrandModal({updatedBrand}) {
+function BrandModal({updatedBrand,HideAddModal,addModal}) {
 
     const brandService = new BrandService();
     const brandContext = useContext(BrandContext)
@@ -17,7 +17,7 @@ function BrandModal({updatedBrand}) {
     const alert = () => brandContext.dispatchAlert('alert')
 
     useEffect(() => {
-        console.log('updatedBrand',updatedBrand);
+        // console.log('updatedBrand',updatedBrand);
         if(brandContext.isUpdate) {
             setProduct(updatedBrand);
         } else {
@@ -31,8 +31,8 @@ function BrandModal({updatedBrand}) {
         brandService.saveBrand(product);
         setProduct({id: 0,brand: '',available: true});
         setTimeout(() => handleHide(),0)
-        noAlert()
-        
+        setTimeout(() => HideAddModal(),0)
+        noAlert()  
     }
 
     const updateProduct = (event) => {

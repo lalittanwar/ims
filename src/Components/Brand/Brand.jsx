@@ -57,13 +57,13 @@ function Brand() {
 
 
     function addItem() {
-        dispatchUpdate('noUpdate')
-        dispatch('handleShow')
-        console.log('1', isUpdate);
+        dispatchUpdate('noUpdate');
+        dispatch('handleShow');
     }
 
     const onChangeOfSearchBranch = (event) => {
         setSearchedBrand(event.target.value)
+
     }
 
     function addBrandTooltip(props) {
