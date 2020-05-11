@@ -74,11 +74,8 @@ function BrandList(props) {
     }
 
     function deleteBrand(brand) {
-        setDeleteBrand(brand)
-        showDeleteModal()
-        // brandContext.showDispatch('handleShow')
-        // findBrand()
-        // setTimeout(() => setDeleteAlert(false),3000)
+        setDeleteBrand(brand);
+        showDeleteModal();
     }
 
     function updateBrand(brand) {
