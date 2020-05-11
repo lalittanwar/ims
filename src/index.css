@@ -20,3 +20,11 @@ a:hover {
 .cp{
   cursor: pointer;
 }
+
+.w-10{
+  width: 10%;
+}
+
+.w-90{
+  width: 90%;
+}

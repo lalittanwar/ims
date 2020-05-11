@@ -27,7 +27,6 @@ function BrandModal({updatedBrand}) {
 
     const saveProduct = (event) => {
         event.preventDefault();
-        alert()
         setProduct({...product,id: product.id + 1});
         brandService.saveBrand(product);
         setProduct({id: 0,brand: '',available: true});
@@ -38,7 +37,6 @@ function BrandModal({updatedBrand}) {
 
     const updateProduct = (event) => {
         event.preventDefault();
-        alert()
         brandService.updateBrand(product);
         setTimeout(() => handleHide(),0)
         noAlert()
