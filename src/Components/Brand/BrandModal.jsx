@@ -55,7 +55,7 @@ function BrandModal({updatedBrand}) {
                     <Form onSubmit={saveProduct}>
                         <Form.Group controlId="formBasicEmail" >
                             <Form.Label>Product Name</Form.Label>
-                            <Form.Control type="text" placeholder="Add new brand.ex: Addidas" value={product.brand} onChange={handleName} />
+                            <Form.Control type="text" placeholder="Add new brand.ex: Addidas" required value={product.brand} onChange={handleName} />
                         </Form.Group>
                         <Form.Group controlId="exampleForm.SelectCustom">
                             <Form.Label>Status</Form.Label>
