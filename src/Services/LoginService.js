@@ -24,9 +24,9 @@ class LoginService extends React.Component {
     requestToLoginUser = (userObj) => {
         if (userObj != null) {
             const url = process.env.REACT_APP_API_LOGIN_URL;
-            this.postRequest(url, userObj)
+            return this.postRequest(url, userObj)
                 .then(token => this.onLoginSuccess(token))
-                .catch(error => this.onLoginFailed(error));
+                .catch(error => {return Promise.reject(error)});
         }
     }
 
@@ -45,16 +45,16 @@ class LoginService extends React.Component {
         window.location.href = "/"+this.REACT_APP_ROOT_CONTEXT;
     }
 
-    onLoginFailed = (error) => {
-       if(error.response){
-           const statusCode = error.response.status;
-           if(statusCode==400){
-               alert("Enter valid caredentials");
-           }else{
-                alert("Somthing went wrong please try leter");
-           }
-       }
-    }
+    // onLoginFailed = (error) => {
+    //    if(error.response){
+    //        const statusCode = error.response.status;
+    //        if(statusCode==400){
+    //            alert("Enter valid caredentials");
+    //        }else{
+    //             alert("Somthing went wrong please try leter");
+    //        }
+    //    }
+    // }
 
     isUserLoggedIn = () => {
         if (this.getLoginToken()) {
