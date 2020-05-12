@@ -11,7 +11,7 @@ import TextField from '@material-ui/core/TextField'
 import DeleteModal from '../Common/DeleteModal'
 import UserService from '../../Services/UserService'
 
-function BrandList() {
+function BrandList(props) {
 
     const brandContext = useContext(BrandContext)
 
@@ -21,10 +21,11 @@ function BrandList() {
     const [brandFetched,isBrandFetched] = useState(false)
     const [userHasWritePermission,setUserPermission] = useState(true)
     const [updatedBrand,setUpdatedBrand] = useState([])
-    const [searchTerm,setSearchTerm] = useState("")
     const [deleteModal,setDeleteModal] = useState(false)
     const [addModal,setAddModal] = useState(true)
     const [deletedBrand,setDeleteBrand] = useState([])
+    const [updatedBrandList, setUpdatedBrandsList] = useState([]);
+    const { searchBrand } = props;
 
 
     const showDeleteModal = () => setDeleteModal(true)
@@ -42,17 +43,13 @@ function BrandList() {
             })
     }
 
-    const handleChange = event => {
-        setSearchTerm(event.target.value)
-    }
-
-    const results = brand.filter(brands => {
-        return brands.brand.toLowerCase().includes(searchTerm.toLowerCase())
-    })
-
     useEffect(() => {
         setUserPermission(userService.userHasWritePermission());
-    })
+        const newBrandList = brand.filter(brands => {
+            return brands.brand.toLowerCase().includes(searchBrand.toLowerCase())
+        })
+        setUpdatedBrandsList(newBrandList);
+    },[brand,searchBrand])
 
     useEffect(() => {
         findBrand()
@@ -76,11 +73,8 @@ function BrandList() {
     }
 
     function deleteBrand(brand) {
-        setDeleteBrand(brand)
-        showDeleteModal()
-        // brandContext.showDispatch('handleShow')
-        // findBrand()
-        // setTimeout(() => setDeleteAlert(false),3000)
+        setDeleteBrand(brand);
+        showDeleteModal();
     }
 
     function updateBrand(brand) {
@@ -103,9 +97,6 @@ function BrandList() {
                     (<div className="alert alert-success alert-dismissible fade show">
                         Successfully Saved.
                     </div>)) : null}
-            <TextField id="standard-basic" label="Search Brand" type="text"
-                value={searchTerm}
-                onChange={handleChange} />
             <br /><br />
             <div className="row mt-2">
                 {!brandFetched ?
@@ -120,13 +111,13 @@ function BrandList() {
                                     <th></th>
                                 </tr>
                             </thead>
-                            {results.map((brand) =>
+                            {updatedBrandList.map((brand) =>
                                 <tbody key={brand.id}>
                                     <tr>
                                         <td>{brand.brand}</td>
                                         <td>{brand.available ? (<span className="badge badge-success">Active</span>) : <span className="badge badge-danger">Inactive</span>}</td>
                                         {userHasWritePermission ? <React.Fragment>
-                                            <div className="position-relative">
+                                            <td className="position-relative">
                                                 <div className="position-absolute delete-button d-inline-block cp delete-btn-position rounded-circle" onClick={() => deleteBrand(brand)}>
                                                     <OverlayTrigger
                                                         placement="top"
@@ -145,7 +136,7 @@ function BrandList() {
                                                         <div className="icon-center">  <FontAwesomeIcon icon={faEdit} size="xs" /> </div>
                                                     </OverlayTrigger>
                                                 </div>
-                                            </div>
+                                            </td>
                                         </React.Fragment> : null}
 
                                     </tr>

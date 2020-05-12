@@ -3,7 +3,7 @@ import {Button,Modal,Form} from 'react-bootstrap'
 import BrandService from '../../Services/BrandService'
 import {BrandContext} from '../Brand/Brand'
 
-function BrandModal({updatedBrand,HideAddModal,addModal}) {
+function BrandModal({updatedBrand,HideAddModal,addModal,alert,showAlert,hideAlert}) {
 
     const brandService = new BrandService();
     const brandContext = useContext(BrandContext)
@@ -13,11 +13,12 @@ function BrandModal({updatedBrand,HideAddModal,addModal}) {
     const handleStatus = (event) => setProduct({...product,available: event.target.value});
 
     const handleHide = () => brandContext.showDispatch('handleHide')
-    const noAlert = () => brandContext.dispatchAlert('noAlert')
-    const alert = () => brandContext.dispatchAlert('alert')
+    // const noAlert = () => brandContext.dispatchAlert('noAlert')
+    // const alert = () => brandContext.dispatchAlert('alert')
+
+    const HideAddModal1 = () => HideAddModal
 
     useEffect(() => {
-        // console.log('updatedBrand',updatedBrand);
         if(brandContext.isUpdate) {
             setProduct(updatedBrand);
         } else {
@@ -27,27 +28,27 @@ function BrandModal({updatedBrand,HideAddModal,addModal}) {
 
     const saveProduct = (event) => {
         event.preventDefault();
-        alert()
         setProduct({...product,id: product.id + 1})
-        brandService.saveBrand(product)
-        .then(res => {
+        brandService.saveBrand(product);
+        // .then(res => {
             setProduct({id: 0,brand: '',available: true})
+            showAlert()
             setTimeout(() => handleHide(),0)
-            setTimeout(() => HideAddModal(),0)
-            noAlert()  
-        })
-        .catch(error => {
-            alert(error)
-        })
+            // HideAddModal1()
+            // hideAlert()
+        // })
+        // .catch(error => {
+        //     alert(error)
+        // })
       
     }
 
     const updateProduct = (event) => {
         event.preventDefault();
-        alert()
         brandService.updateBrand(product);
+        showAlert()
         setTimeout(() => handleHide(),0)
-        noAlert()
+        // noAlert()
     }
 
 
