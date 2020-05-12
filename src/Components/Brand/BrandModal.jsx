@@ -10,15 +10,15 @@ function BrandModal({updatedBrand,HideAddModal,addModal}) {
 
     const [product,setProduct] = useState({id: 0,brand: '',available: true});
 
-    const [error, setError] = useState(null);
+    const [error,setError] = useState(null);
 
     const handleName = (event) => {
-        if(event.target.value == ''){
-            setError('brand cannot be empty')
-        }
+        // if(event.target.value == '') {
+        //     setError('brand cannot be empty')
+        // }
         setProduct({...product,brand: event.target.value});
     }
-    
+
     const handleStatus = (event) => setProduct({...product,available: event.target.value});
 
     const handleHide = () => brandContext.showDispatch('handleHide')
@@ -40,28 +40,37 @@ function BrandModal({updatedBrand,HideAddModal,addModal}) {
         event.preventDefault();
         setProduct({...product,id: product.id + 1})
         brandService.saveBrand(product)
-        .then(res => {
-            setProduct({id: 0,brand: '',available: true})
-            noAlert()
-            setTimeout(() => handleHide(),0)
-            HideAddModal1()
-        })
-        .catch(error => {
-            if(error.response.status == 400){
-                setError('Brand already exist')
-            } else {
-                setError('Something went wrong. Please try again')
-            }
-        })
-      
+            .then(res => {
+                setProduct({id: 0,brand: '',available: true})
+                noAlert()
+                setTimeout(() => handleHide(),0)
+                HideAddModal1()
+            })
+            .catch(error => {
+                if(error.response.status == 400) {
+                    setError('Brand already exist')
+                } else {
+                    setError('Something went wrong. Please try again')
+                }
+            })
+
     }
 
     const updateProduct = (event) => {
         event.preventDefault();
-        brandService.updateBrand(product);
-        // alert()
-        setTimeout(() => handleHide(),0)
-        noAlert()
+        brandService.updateBrand(product)
+            .then(res => {
+                setTimeout(() => handleHide(),0)
+                noAlert()
+            })
+            .catch(error => {
+                if(error.response.status == 400) {
+                    setError('Brand already exist')
+                } else {
+                    setError('Something went wrong. Please try again')
+                }
+            })
+
     }
 
 
@@ -77,7 +86,7 @@ function BrandModal({updatedBrand,HideAddModal,addModal}) {
                             <Form.Label>Product Name</Form.Label>
                             <Form.Control type="text" placeholder="Add new brand.ex: Addidas" required value={product.brand} onChange={handleName} />
                         </Form.Group>
-                        <p style={{fontSize:'12px'}} className="text-danger">{error}</p> 
+                        <p style={{fontSize: '12px'}} className="text-danger">{error}</p>
                         <Form.Group controlId="exampleForm.SelectCustom">
                             <Form.Label>Status</Form.Label>
                             <Form.Control as="select" custom value={product.available} onChange={handleStatus}>
