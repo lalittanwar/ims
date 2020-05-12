@@ -3,7 +3,7 @@ import {Button,Modal,Form} from 'react-bootstrap'
 import BrandService from '../../Services/BrandService'
 import {BrandContext} from '../Brand/Brand'
 
-function BrandModal({updatedBrand,HideAddModal,addModal,alert,showAlert,hideAlert}) {
+function BrandModal({updatedBrand,HideAddModal,addModal}) {
 
     const brandService = new BrandService();
     const brandContext = useContext(BrandContext)
@@ -13,8 +13,8 @@ function BrandModal({updatedBrand,HideAddModal,addModal,alert,showAlert,hideAler
     const handleStatus = (event) => setProduct({...product,available: event.target.value});
 
     const handleHide = () => brandContext.showDispatch('handleHide')
-    // const noAlert = () => brandContext.dispatchAlert('noAlert')
-    // const alert = () => brandContext.dispatchAlert('alert')
+    const noAlert = () => brandContext.dispatchAlert('noAlert')
+    const alert = () => brandContext.dispatchAlert('alert')
 
     const HideAddModal1 = () => HideAddModal
 
@@ -32,9 +32,10 @@ function BrandModal({updatedBrand,HideAddModal,addModal,alert,showAlert,hideAler
         brandService.saveBrand(product);
         // .then(res => {
             setProduct({id: 0,brand: '',available: true})
-            showAlert()
+            // showAlert()
+            noAlert()
             setTimeout(() => handleHide(),0)
-            // HideAddModal1()
+            HideAddModal1()
             // hideAlert()
         // })
         // .catch(error => {
@@ -46,9 +47,9 @@ function BrandModal({updatedBrand,HideAddModal,addModal,alert,showAlert,hideAler
     const updateProduct = (event) => {
         event.preventDefault();
         brandService.updateBrand(product);
-        showAlert()
+        // alert()
         setTimeout(() => handleHide(),0)
-        // noAlert()
+        noAlert()
     }
 
 

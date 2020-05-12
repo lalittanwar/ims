@@ -3,10 +3,12 @@ import {Button,Modal} from 'react-bootstrap'
 import BrandService from '../../Services/BrandService'
 import {BrandContext} from '../Brand/Brand'
 
-export default function DeleteModal({deletedBrand,HideDeleteModal,deleteModal}) {
+export default function DeleteModal({deletedBrand,HideDeleteModal,deleteModal,showDeleteAlert,deleteAlert}) {
 
     const brandService = new BrandService()
     const brandContext = useContext(BrandContext)
+
+    const noAlert = () => brandContext.dispatchAlert('noAlert')
 
     useEffect(() => {
         // console.log('deleteBrand',deletedBrand);
@@ -14,6 +16,8 @@ export default function DeleteModal({deletedBrand,HideDeleteModal,deleteModal}) 
 
     function deleteBrand() {
     brandService.deleteBrand(deletedBrand)
+    noAlert()
+    showDeleteAlert()
     setTimeout(() => HideDeleteModal(),0)
 
     }

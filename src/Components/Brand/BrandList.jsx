@@ -22,6 +22,7 @@ function BrandList(props) {
     const [userHasWritePermission,setUserPermission] = useState(true)
     const [updatedBrand,setUpdatedBrand] = useState([])
     const [deleteModal,setDeleteModal] = useState(false)
+    const [deleteAlert,setDeleteAlert] = useState(true)
     const [addModal,setAddModal] = useState(true)
     const [deletedBrand,setDeleteBrand] = useState([])
     const [updatedBrandList, setUpdatedBrandsList] = useState([]);
@@ -30,6 +31,9 @@ function BrandList(props) {
 
     const showDeleteModal = () => setDeleteModal(true)
     const HideDeleteModal = () => setDeleteModal(false)
+
+    const showDeleteAlert = () => setDeleteAlert(true)
+    const HideDeleteAlert = () => setDeleteAlert(false)
 
     const showAddModal = () => setAddModal(true)
     const HideAddModal = () => setAddModal(false)
@@ -54,6 +58,8 @@ function BrandList(props) {
     useEffect(() => {
         findBrand()
         setTimeout(() => brandContext.dispatchAlert('alert'), 3000)
+        setTimeout(() => HideDeleteAlert(), 3000)
+        
     }, [brandContext.showState,addModal,deleteModal])
 
     function deleteBrandToolTip(props) {
@@ -86,10 +92,10 @@ function BrandList(props) {
     return (
         <React.Fragment>
             <br />
-            {!brandContext.alert ? (deleteModal ? (<div className="alert alert-danger alert-dismissible fade show">
+            {!brandContext.alert  ? (deleteAlert ? (<div className="alert alert-danger alert-dismissible fade show">
                 Successfully Deleted.
             </div>) : null) : null}
-            {!brandContext.alert ?
+            {!brandContext.alert && !deleteAlert ?
                 (brandContext.isUpdate ?
                     (<div className="alert alert-primary alert-dismissible fade show">
                         Successfully Updated.
@@ -150,7 +156,7 @@ function BrandList(props) {
                     addModal={addModal} />)
             }
 
-            <DeleteModal deleteModal={deleteModal}
+            <DeleteModal deleteModal={deleteModal} showDeleteAlert = {showDeleteAlert} deleteAlert = {deleteAlert}
                 deletedBrand={deletedBrand} HideDeleteModal={HideDeleteModal} />
         </React.Fragment >
     )
