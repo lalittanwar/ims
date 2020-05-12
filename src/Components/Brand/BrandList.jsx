@@ -10,6 +10,7 @@ import { BrandContext } from '../Brand/Brand'
 import TextField from '@material-ui/core/TextField'
 import DeleteModal from '../Common/DeleteModal'
 import UserService from '../../Services/UserService'
+import NoDataFound from '../Common/NoDataFound'
 
 function BrandList(props) {
 
@@ -107,8 +108,8 @@ function BrandList(props) {
             <div className="row mt-2">
                 {!brandFetched ?
                     <div className="col-12 text-center pt-5"><Loader type="TailSpin" color="#0056b3" height={80} width={80} /></div>
-                    :
-                    <div className="col-10 col-md-10 col-lg-10 col-xl-10 mb-2" key={brand.id}>
+                    : updatedBrandList.length ?
+                    (<div className="col-10 col-md-10 col-lg-10 col-xl-10 mb-2" key={brand.id}>
                         <table className="table ">
                             <thead>
                                 <tr>
@@ -148,7 +149,7 @@ function BrandList(props) {
                                     </tr>
                                 </tbody>)}
                         </table>
-                    </div>
+                    </div>) : (<NoDataFound/>)
                 }
             </div>
             {brandContext.isUpdate ? (<BrandModal updatedBrand={updatedBrand} />) :

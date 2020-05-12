@@ -34,8 +34,8 @@ export default function DeleteModal({deletedBrand,HideDeleteModal,deleteModal,sh
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <Button variant="secondary" onClick={HideDeleteModal}>Close</Button>
                     <Button variant="danger" onClick={deleteBrand}>Delete</Button>
+                    <Button variant="secondary" onClick={HideDeleteModal}>Close</Button>
                 </Modal.Footer>
             </Modal>
         </div>
