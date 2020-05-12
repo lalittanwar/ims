@@ -12,7 +12,13 @@ function BrandModal({updatedBrand,HideAddModal,addModal}) {
 
     const [error, setError] = useState(null);
 
-    const handleName = (event) => setProduct({...product,brand: event.target.value});
+    const handleName = (event) => {
+        if(event.target.value == ''){
+            setError('brand cannot be empty')
+        }
+        setProduct({...product,brand: event.target.value});
+    }
+    
     const handleStatus = (event) => setProduct({...product,available: event.target.value});
 
     const handleHide = () => brandContext.showDispatch('handleHide')
@@ -71,7 +77,7 @@ function BrandModal({updatedBrand,HideAddModal,addModal}) {
                             <Form.Label>Product Name</Form.Label>
                             <Form.Control type="text" placeholder="Add new brand.ex: Addidas" required value={product.brand} onChange={handleName} />
                         </Form.Group>
-                        <p style={{fontSize:'12px'}} class="text-danger">{error}</p> 
+                        <p style={{fontSize:'12px'}} className="text-danger">{error}</p> 
                         <Form.Group controlId="exampleForm.SelectCustom">
                             <Form.Label>Status</Form.Label>
                             <Form.Control as="select" custom value={product.available} onChange={handleStatus}>
