@@ -9,6 +9,9 @@ function BrandModal({updatedBrand,HideAddModal,addModal}) {
     const brandContext = useContext(BrandContext)
 
     const [product,setProduct] = useState({id: 0,brand: '',available: true});
+
+    const [error, setError] = useState(null);
+
     const handleName = (event) => setProduct({...product,brand: event.target.value});
     const handleStatus = (event) => setProduct({...product,available: event.target.value});
 
@@ -19,6 +22,7 @@ function BrandModal({updatedBrand,HideAddModal,addModal}) {
     const HideAddModal1 = () => HideAddModal
 
     useEffect(() => {
+        setError('')
         if(brandContext.isUpdate) {
             setProduct(updatedBrand);
         } else {
@@ -29,18 +33,20 @@ function BrandModal({updatedBrand,HideAddModal,addModal}) {
     const saveProduct = (event) => {
         event.preventDefault();
         setProduct({...product,id: product.id + 1})
-        brandService.saveBrand(product);
-        // .then(res => {
+        brandService.saveBrand(product)
+        .then(res => {
             setProduct({id: 0,brand: '',available: true})
-            // showAlert()
             noAlert()
             setTimeout(() => handleHide(),0)
             HideAddModal1()
-            // hideAlert()
-        // })
-        // .catch(error => {
-        //     alert(error)
-        // })
+        })
+        .catch(error => {
+            if(error.response.status == 400){
+                setError('Brand already exist')
+            } else {
+                setError('Something went wrong. Please try again')
+            }
+        })
       
     }
 
@@ -65,6 +71,7 @@ function BrandModal({updatedBrand,HideAddModal,addModal}) {
                             <Form.Label>Product Name</Form.Label>
                             <Form.Control type="text" placeholder="Add new brand.ex: Addidas" required value={product.brand} onChange={handleName} />
                         </Form.Group>
+                        <p style={{fontSize:'12px'}} class="text-danger">{error}</p> 
                         <Form.Group controlId="exampleForm.SelectCustom">
                             <Form.Label>Status</Form.Label>
                             <Form.Control as="select" custom value={product.available} onChange={handleStatus}>
