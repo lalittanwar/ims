@@ -2,8 +2,7 @@ import React,{Component} from 'react'
 import './Sidebar.css';
 import {Link} from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faProjectDiagram,faUser, faDigitalTachograph, faEnvelopeOpenText,faMeteor,faDatabase} from '@fortawesome/free-solid-svg-icons';
-import UrlUtils from '../../Utils/UrlUtils';
+import { faProjectDiagram,faSeedling, faPodcast, faFile,faMeteor} from '@fortawesome/free-solid-svg-icons';
 
 
 export class Sidebar extends Component {
@@ -11,6 +10,7 @@ export class Sidebar extends Component {
     constructor(){
         super();
     }
+    
     render() {
         return (
             <div  className="list-group w-100 h-100">
@@ -26,21 +26,19 @@ export class Sidebar extends Component {
                 </Link>
                 <Link to="/brand?active=brand">
                     <div className="list-group-item">
-                        <span className="mr-1"><FontAwesomeIcon icon={faDatabase} /></span> Brand
+                        <span className="mr-1"><FontAwesomeIcon icon={faPodcast} /></span> Brand
                     </div>
                 </Link>
-                <div className="list-group-item">
-                    <span className="mr-1"><FontAwesomeIcon icon={faDatabase} /></span> Overview
-                </div>
-                <div className="list-group-item">
-                    <span className="mr-1"><FontAwesomeIcon icon={faEnvelopeOpenText} /></span> Event
-                </div>
-                <div className="list-group-item">
-                    <span className="mr-1"><FontAwesomeIcon icon={faUser} /></span> Profile
-                </div>
-                <div className="list-group-item">
-                    <span className="mr-1"><FontAwesomeIcon icon={faDigitalTachograph} /></span> Status
-                </div>
+                <Link to="/attribute?active=attribute">
+                    <div className="list-group-item">
+                        <span className="mr-1"><FontAwesomeIcon icon={faSeedling} /></span> Attribute
+                    </div>
+                </Link>
+                <Link to="/category?active=brand">
+                    <div className="list-group-item">
+                        <span className="mr-1"><FontAwesomeIcon icon={faFile} /></span> Category
+                    </div>
+                </Link>
             </div>
         )
     }

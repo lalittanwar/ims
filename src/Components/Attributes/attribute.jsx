@@ -4,7 +4,7 @@ import React from 'react'
 function Attribute(){
     return (
         <React.Fragment>
-        This is attribute componenet
+            This is attribute componenet
         </React.Fragment>
     );
 }
