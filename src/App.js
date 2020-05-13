@@ -11,6 +11,8 @@ import Login from './Components/Login/Login';
 import Logout from './Components/Logout/Logout';
 import PublicRoute from './Router/PublicRoute';
 import LoginService from './Services/LoginService';
+import Attribute from './Components/Attributes/Attribute';
+import Category from './Components/Category/category';
 
 const loginService = new LoginService();
 
@@ -34,6 +36,8 @@ function App() {
               <PrivateRoute restricted={false} path="/product" exact component={Product} />
               <PrivateRoute restricted={false} path="/brand" exact component={Brand} />
               <PrivateRoute restricted={false} path="/logout" exact component={Logout} />
+              <PrivateRoute restricted={false} path="/attribute" exact component={Attribute} />
+              <PrivateRoute restricted={false} path="/attribute" exact component={Category} />
               <PublicRoute restricted={true} component={Login} path="/login" exact />
             </Switch>
           </div>
